@@ -1,6 +1,6 @@
-package org.server;
+package com.server;
 
-import org.server.service.ItemService;
+import com.server.service.ItemService;
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;

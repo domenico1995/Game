@@ -1,4 +1,4 @@
-package org.server;
+package com.server;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

@@ -1,4 +1,4 @@
-package org.server.service;
+package com.server.service;
 
 import com.google.gson.Gson;
 import org.server.data.User;
