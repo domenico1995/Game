@@ -42,6 +42,8 @@ public class engine {
         } else if (text_display.equals(testi.ins_username.testo())) {
             u.setUsername(text);
             setTesto_display("riuscito\n");   
+        }else{
+            
         }
 
     }
