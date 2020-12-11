@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.connection;
+package com.gioco.connection;
 
 import javax.ws.rs.core.Response;
-import com.data.User;
+import com.gioco.data.User;
 import com.google.gson.Gson;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

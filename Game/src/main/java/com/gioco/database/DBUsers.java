@@ -1,6 +1,6 @@
-package com.database;
+package com.gioco.database;
 
-import com.data.User;
+import com.gioco.data.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

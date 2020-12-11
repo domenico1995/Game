@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.server.classi;
+package com.server_dati.classi;
 
-import com.server.thread.GameThread;
+import com.server_dati.thread.GameThread;
 import java.util.HashMap;
 import java.util.Map;
 

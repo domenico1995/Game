@@ -1,10 +1,10 @@
 package com.gioco;
 
-import com.data.User;
-import com.data.testi;
-import com.manager.Manager_user;
-import com.manager.Manager_gioco;
-import com.manager.Manager_opzioni;
+import com.gioco.data.User;
+import com.gioco.data.testi;
+import com.gioco.manager.Manager_user;
+import com.gioco.manager.Manager_gioco;
+import com.gioco.manager.Manager_opzioni;
 
 public class engine {
 
@@ -27,8 +27,12 @@ public class engine {
     }
 
     public void getWord(String text, String text_display, int time) {
-
-        if (text_display.equals(testi.ins_nome.testo())) {
+        
+        if(text.equals("exit")){
+            //opzioni di salvataggio
+            System.exit(0);
+        }
+        else if (text_display.equals(testi.ins_nome.testo())) {
             u.setNome(text);
             setTesto(text);
             setTesto_display(testi.ins_cognome.testo());
@@ -37,10 +41,7 @@ public class engine {
             setTesto_display(testi.ins_username.testo());
         } else if (text_display.equals(testi.ins_username.testo())) {
             u.setUsername(text);
-            setTesto_display("riuscito\n");
-            
-        }else{
-            
+            setTesto_display("riuscito\n");   
         }
 
     }

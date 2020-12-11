@@ -1,8 +1,8 @@
-package com.manager;
+package com.gioco.manager;
 
-import com.connection.Connection_User;
-import com.database.DBUsers;
-import com.data.User;
+import com.gioco.connection.Connection_User;
+import com.gioco.database.DBUsers;
+import com.gioco.data.User;
 import java.sql.SQLException;
 
 public class Manager_user {

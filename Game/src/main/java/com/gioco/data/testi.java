@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.data;
+package com.gioco.data;
 
 /**
  *
@@ -11,7 +11,7 @@ package com.data;
  */
 public enum testi {
     
-    ins_nome("inserire nome utente: "),
+    ins_nome("inserire nome: "),
     ins_cognome("inserire cognome: "),
     ins_username("inserire username: "),
     nome_cognome_trovati("nome e cognome trovati\n"),

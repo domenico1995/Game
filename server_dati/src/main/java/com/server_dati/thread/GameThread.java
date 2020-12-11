@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.server.thread;
+package com.server_dati.thread;
 
-import com.server.classi.Game;
+import com.server_dati.classi.Game;
 import java.net.Socket;
 
 /**
@@ -18,7 +18,7 @@ public class GameThread extends Thread{
     
     private boolean run = true;
     
-    private String s;
+    private String text;
     
     private final Game game;
     
@@ -27,9 +27,12 @@ public class GameThread extends Thread{
         this.game = game;
     }
 
-    public GameThread(Socket socket, Game game, String name) {
-        this(socket, game);
-        this.setName(name);
+
+    public GameThread(Socket socket, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public void run(){}
     
 }
