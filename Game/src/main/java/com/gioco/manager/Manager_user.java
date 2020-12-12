@@ -16,10 +16,9 @@ public class Manager_user {
         us = new DBUsers();
         us.connect();
         cs = new Connection_User();
-
     }
 
-    public void manager_user(User u) throws SQLException {
+    public void utente(User u) throws SQLException {
 
         if (trova_utente(u) == false) {
             if (trova_utente_server(u) == false) {
@@ -33,7 +32,6 @@ public class Manager_user {
         }
         
         us.cambia_ultimo_utente();
-
     }
 
     public void nuovo_utente(User u) throws SQLException {
@@ -45,11 +43,7 @@ public class Manager_user {
     }
 
     public boolean trova_utente(User u) throws SQLException {
-        if (us.cerca_user(u) != null) {
-            return true;
-        }
-        return false;
-
+        return us.cerca_user(u) != null;
     }
 
     public boolean trova_utente_server(User u) {

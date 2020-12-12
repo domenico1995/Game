@@ -1,4 +1,4 @@
-package org.server.database;
+package com.server.database;
 
 import org.server.data.User;
 
@@ -41,9 +41,9 @@ public class DBUsersSingleton {
         pro.setProperty("user", "user");
         pro.setProperty("password", "1995");
         con = DriverManager.getConnection("jdbc:h2:./resourcse/db/users", pro);
-        Statement stm = con.createStatement();
-        stm.executeUpdate(CREATE_TABLE_USERS);
-        stm.close();
+        try (Statement stm = con.createStatement()) {
+            stm.executeUpdate(CREATE_TABLE_USERS);
+        }
     }
 
     private void reconnect() throws SQLException {
@@ -55,36 +55,36 @@ public class DBUsersSingleton {
     public void insertUsers(User user) throws SQLException {
 
         reconnect();
-        PreparedStatement ps = con.prepareStatement("INSERT INTO users VALUES (?,?,?)");
-        ps.setString(1, user.getNome());
-        ps.setString(2, user.getCognome());
-        ps.setString(3, user.getUsername());
-        ps.executeUpdate();
-        ps.close();
+        try (PreparedStatement ps = con.prepareStatement("INSERT INTO users VALUES (?,?,?)")) {
+            ps.setString(1, user.getNome());
+            ps.setString(2, user.getCognome());
+            ps.setString(3, user.getUsername());
+            ps.executeUpdate();
+        }
 
     }
 
     public User getUsers(String username) throws SQLException {
         reconnect();
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username = ?");
-        ps.setString(1, username);
-        ResultSet rs = ps.executeQuery();
-        User u = null;
-
-        if (rs.next()) {
-            u = new User(rs.getString(1), rs.getString(2), rs.getString(3));
+        User u;
+        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username = ?")) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                u = null;
+                if (rs.next()) {
+                    u = new User(rs.getString(1), rs.getString(2), rs.getString(3));
+                }
+            }
         }
-        rs.close();
-        ps.close();
         return u;
     }
 
     public void removeUsers(String id) throws SQLException {
         reconnect();
-        PreparedStatement ps = con.prepareStatement("DELETE FROM users WHERE id = ?");
-        ps.setString(1, id);
-        ps.executeUpdate();
-        ps.close();
+        try (PreparedStatement ps = con.prepareStatement("DELETE FROM users WHERE id = ?")) {
+            ps.setString(1, id);
+            ps.executeUpdate();
+        }
     }
 
     public boolean trova_nome_cognome(User u) throws SQLException {
@@ -92,9 +92,10 @@ public class DBUsersSingleton {
         PreparedStatement ps = con.prepareStatement("SELECT nome FROM users WHERE nome = ? and cognome = ?");
         ps.setString(1, u.getNome());
         ps.setString(2, u.getCognome());
-        ResultSet rs = ps.executeQuery();
-        boolean flag = rs.next();
-        rs.close();
+        boolean flag;
+        try (ResultSet rs = ps.executeQuery()) {
+            flag = rs.next();
+        }
         return flag;
     }
 
@@ -108,12 +109,12 @@ public class DBUsersSingleton {
         ps.setString(1, u.getNome());
         ps.setString(2, u.getCognome());
         ps.setString(3, u.getUsername());
-        ResultSet rs = ps.executeQuery();
-        flag = false;
-        while (rs.next()) {
-            flag = true;
+        try (ResultSet rs = ps.executeQuery()) {
+            flag = false;
+            while (rs.next()) {
+                flag = true;
+            }
         }
-        rs.close();
         return flag;
     }
 }

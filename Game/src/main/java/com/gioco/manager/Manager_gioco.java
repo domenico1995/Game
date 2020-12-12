@@ -11,4 +11,6 @@ package com.gioco.manager;
  */
 public class Manager_gioco {
     
+    public void Manager_gioco(){}
+    
 }

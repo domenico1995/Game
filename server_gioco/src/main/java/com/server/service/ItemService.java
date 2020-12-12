@@ -2,7 +2,7 @@ package com.server.service;
 
 import com.google.gson.Gson;
 import org.server.data.User;
-import org.server.database.DBUsersSingleton;
+import com.server.database.DBUsersSingleton;
 
 import java.sql.SQLException;
 import javax.ws.rs.Consumes;
@@ -10,6 +10,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -43,12 +44,14 @@ public class ItemService {
     @Produces("application/json")
     public Response get(@QueryParam("username") String username) {
         User u;
+        System.out.println("hello");
         try {
             u = DBUsersSingleton.getInstance().getUsers(username);
         } catch (SQLException ex) {
             return Response.serverError().build();
         }
         if (u != null) {
+            System.out.println(u.getCognome());
             Gson gson = new Gson();
             String js = gson.toJson(u);
             return Response.ok(js, MediaType.APPLICATION_JSON).build();

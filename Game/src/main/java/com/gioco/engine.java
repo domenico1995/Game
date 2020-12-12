@@ -5,12 +5,19 @@ import com.gioco.data.testi;
 import com.gioco.manager.Manager_user;
 import com.gioco.manager.Manager_gioco;
 import com.gioco.manager.Manager_opzioni;
+import java.sql.SQLException;
 
 public class engine {
 
     private String testo = "";
     
     private String testo_display = testi.ins_nome.testo();
+    
+    private Manager_user man_user;
+    
+    private Manager_gioco man_gioco;
+    
+    private Manager_opzioni man_opzioni;
     
     public User u;
 
@@ -20,19 +27,17 @@ public class engine {
 
     public void init() {
         u = new User();
-        Manager_user man_user = new Manager_user();
-        Manager_gioco man_gioco = new Manager_gioco();
-        Manager_opzioni man_opzioni = new Manager_opzioni();
-
+        man_user = new Manager_user();
+        man_gioco = new Manager_gioco();
+        man_opzioni = new Manager_opzioni();
     }
 
-    public void getWord(String text, String text_display, int time) {
+    public void getWord(String text, String text_display, int time) throws SQLException {
         
         if(text.equals("exit")){
             //opzioni di salvataggio
             System.exit(0);
-        }
-        else if (text_display.equals(testi.ins_nome.testo())) {
+        }else if (text_display.equals(testi.ins_nome.testo())) {
             u.setNome(text);
             setTesto(text);
             setTesto_display(testi.ins_cognome.testo());
@@ -41,6 +46,7 @@ public class engine {
             setTesto_display(testi.ins_username.testo());
         } else if (text_display.equals(testi.ins_username.testo())) {
             u.setUsername(text);
+            man_user.utente(u);
             setTesto_display("riuscito\n");   
         }else{
             

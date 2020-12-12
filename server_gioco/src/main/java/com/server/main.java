@@ -19,6 +19,7 @@ public class main {
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
         try {
             server.start();
+            System.out.println("hee");
             System.in.read();
             server.shutdown();
         } catch (IOException ex) {

@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class gioco extends javax.swing.JFrame {
 
@@ -145,7 +147,11 @@ public class gioco extends javax.swing.JFrame {
             case KeyEvent.VK_ENTER:
                 if (!"".equals(testo)) {
                     textField1.setText("");
-                    en.getWord(testo, testo_display, 0);
+            try {
+                en.getWord(testo, testo_display, 0);
+            } catch (SQLException ex) {
+                Logger.getLogger(gioco.class.getName()).log(Level.SEVERE, null, ex);
+            }
                     testo_display = en.getTesto_display();
                     textArea1.append(testo + "\n" + testo_display);
 
@@ -177,7 +183,11 @@ public class gioco extends javax.swing.JFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             textField1.setText("");
-            en.getWord(testo, testo_display, 0);
+            try {
+                en.getWord(testo, testo_display, 0);
+            } catch (SQLException ex) {
+                Logger.getLogger(gioco.class.getName()).log(Level.SEVERE, null, ex);
+            }
             testo_display = en.getTesto_display();
             textArea1.append(testo + "\n" + testo_display);
         }

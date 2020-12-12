@@ -17,13 +17,13 @@ public class Cliente {
         WebTarget target = client.target("http://localhost:4321");
         
         Gson gson = new Gson();
-        User a = new User("domenico", "100", "60");
+        User a = new User("domenico", "romanazzi", "doppiat");
         Response resp = target.path("user/add").request(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(gson.toJson(a), MediaType.APPLICATION_JSON));
         System.out.println(resp);
         System.out.println(resp.readEntity(String.class));
         
-        resp = target.path("user/get/100").request(MediaType.APPLICATION_JSON).get();
+        resp = target.path("user/get").queryParam("username", "doppiat").request(MediaType.APPLICATION_JSON).get();
         System.out.println(resp);
         System.out.println(resp.readEntity(String.class));
         
