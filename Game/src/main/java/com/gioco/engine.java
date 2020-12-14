@@ -7,7 +7,7 @@ import com.gioco.manager.Manager_gioco;
 import com.gioco.manager.Manager_opzioni;
 import java.sql.SQLException;
 
-public class engine {
+public final class engine {
 
     private String testo = "";
     
@@ -46,8 +46,8 @@ public class engine {
             setTesto_display(testi.ins_username.testo());
         } else if (text_display.equals(testi.ins_username.testo())) {
             u.setUsername(text);
-            man_user.utente(u);
-            setTesto_display("riuscito\n");   
+            setTesto_display("riuscito\n");  
+            man_user.creazione_utenti(u);
         }else{
             
         }

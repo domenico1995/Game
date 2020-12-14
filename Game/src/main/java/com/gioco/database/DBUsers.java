@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class DBUsers {
@@ -14,9 +16,12 @@ public class DBUsers {
     public static final String CREATE_USER = "CREATE TABLE IF NOT EXISTS user(nome VARCHAR(20), cognome VARCHAR(20),"
             + " username VARCHAR(25) PRIMARY KEY)";
 
+    public static final String SEARCH_USER = "SELECT * FROM user WHERE nome = ? and cognome = ? and username = ?";
+    
     private Connection con;
 
     private Properties pro;
+    
 
     public void connect() throws SQLException {
         pro = new Properties();
@@ -45,27 +50,22 @@ public class DBUsers {
         }
     }
 
-    public User cerca_user(User user) throws SQLException {
+    public boolean cerca_user(User user) throws SQLException {
         reconnect();
-        System.out.println("hello world!!!!!!!!!!!!!");
-        User u = new User();
-        try (PreparedStatement pre = con.prepareStatement("SELECT * FROM user WHERE nome = ? and cognome = ? and username = ?")) {
+        List<User> u = new ArrayList<>();
+        try (PreparedStatement pre = con.prepareStatement(SEARCH_USER)) {
             pre.setString(1, user.getNome());
             pre.setString(2, user.getCognome());
             pre.setString(3, user.getUsername());
             try (ResultSet re = pre.executeQuery()) {
-                if (re.next()) {
-                    u.setNome(re.getString(1));
-                    u.setNome(re.getString(2));
-                    u.setNome(re.getString(3));
+                while (re.next()) {
+                    User utente = new User(re.getString(1), re.getString(2), re.getString(3));
+                    u.add(utente);
                 }
             }
+            return u.isEmpty() != true;
         }finally{
-            u.setNome("Nome");
-            u.setCognome("Cognome");
-            u.setUsername("Username");
+            return false;
         }
-        
-        return u;
     }
 }
