@@ -1,5 +1,6 @@
 package com.gioco;
 
+import com.gioco.database.DBUsers;
 import com.service.service;
 import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 
 public class gioco extends javax.swing.JFrame {
 
-    private Timer time = new Timer();
+    private final Timer time = new Timer();
 
     private service ser;
 
@@ -200,9 +201,9 @@ public class gioco extends javax.swing.JFrame {
      */
     public static void main(String args[]) throws SQLException {
 
-        String text = "";
-        String text_display = "";
-
+        DBUsers us= new DBUsers();
+        us.connect();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new gioco().setVisible(true);
@@ -214,13 +215,10 @@ public class gioco extends javax.swing.JFrame {
 
         int second = 0;
 
+        @Override
         public void run() {
-            EventQueue.invokeLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    textField2.setText(String.valueOf(1000 - second++));
-                }
+            EventQueue.invokeLater(() -> {
+                textField2.setText(String.valueOf(1000 - second++));
             });
         }
 

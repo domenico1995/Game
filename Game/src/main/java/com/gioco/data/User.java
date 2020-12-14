@@ -18,7 +18,7 @@ public class User {
 
     public User(){}
     
-    public User(int id, String nome, String cognome, String username){
+    public User(String nome, String cognome, String username){
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;

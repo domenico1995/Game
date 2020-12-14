@@ -35,7 +35,7 @@ public class Connection_User {
                 .put(Entity.entity(gson.toJson(u), MediaType.APPLICATION_JSON));
     }
     
-    public boolean trova_utente(User u){
+    public boolean trova_utenti(User u){
         
         boolean flag;
         
