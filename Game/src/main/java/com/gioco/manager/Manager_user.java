@@ -1,5 +1,6 @@
 package com.gioco.manager;
 
+import com.gioco.connection.Connection_User;
 import com.gioco.data.User;
 import com.gioco.database.DBUsers;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ public class Manager_user {
 
     public DBUsers us = new DBUsers();
 
-    //public Connection_User cs;
+    public Connection_User cs;
 
     public void Manager_user() throws SQLException {
 
@@ -23,9 +24,8 @@ public class Manager_user {
         
         if(cerca_utente(utente) != false){
             us.insertUsers(utente);
-            System.out.println("funziona");
         }else{
-            System.out.println("hello wor");
+         
         }
     }    
     
