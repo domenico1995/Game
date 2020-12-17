@@ -36,15 +36,20 @@ public class Connection_User {
     }
     
     public boolean trova_utenti(User u){
-        
-        boolean flag;
-        
-        resp = web.path("user/get")
-                .queryParam("nome", u.getNome())
-                .queryParam("cognome", u.getNome())
-                .queryParam("username", u.getNome())
+        resp = web.path("user/find_user")
+                .queryParam("nome", "domenico")
+                .queryParam("cognome", "romanazzi")
+                .queryParam("username", "doppiat")
                 .request(MediaType.APPLICATION_JSON).get();
-        return gson.fromJson(resp.readEntity(String.class), boolean.class);
+        return Boolean.parseBoolean(resp.readEntity(String.class));
+    }
+    
+    public boolean trova_nome_cognome(User u){
+        resp = web.path("user/find_nome_surname")
+                .queryParam("nome", "domenico")
+                .queryParam("cognome", "romanazzi")
+                .request(MediaType.APPLICATION_JSON).get();
+        return Boolean.parseBoolean(resp.readEntity(String.class));
     }
     
 }

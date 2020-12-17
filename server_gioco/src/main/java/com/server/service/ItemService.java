@@ -65,9 +65,9 @@ public class ItemService {
     @DELETE
     @Path("/delete/")
     @Produces("application/json")
-    public Response delete(@QueryParam("user") String user) {
+    public Response delete(@QueryParam("username") String username) {
         try {
-            DBUsersSingleton.getInstance().removeUsers(user);
+            DBUsersSingleton.getInstance().removeUsers(username);
         } catch (SQLException ex) {
             return Response.serverError().build();
         }
@@ -109,16 +109,13 @@ public class ItemService {
             u.setNome(nome);
             u.setCognome(cognome);
             u.setUsername(username);
-            System.out.println("prova");
             flag = DBUsersSingleton.getInstance().trova_nome_cognome_username(u);
             System.out.println(flag);
         } catch (SQLException ex) {
             return Response.serverError().build();
         }
-
         Gson gson = new Gson();
         String js = gson.toJson(flag);
-        System.out.println(js);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
 }

@@ -79,10 +79,10 @@ public class DBUsersSingleton {
         return u;
     }
 
-    public void removeUsers(String id) throws SQLException {
+    public void removeUsers(String username) throws SQLException {
         reconnect();
-        try (PreparedStatement ps = con.prepareStatement("DELETE FROM users WHERE id = ?")) {
-            ps.setString(1, id);
+        try (PreparedStatement ps = con.prepareStatement("DELETE FROM users WHERE username = ?")) {
+            ps.setString(1, username);
             ps.executeUpdate();
         }
     }
