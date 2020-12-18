@@ -7,14 +7,13 @@ import java.sql.SQLException;
 
 public class Manager_user {
 
-    public DBUsers us = new DBUsers();
+    public DBUsers us;
 
     public Connection_User cs;
 
     public void Manager_user() throws SQLException {
 
-        
-        System.out.println("manager user");
+        us = new DBUsers();
         us.connect();
         cs = new Connection_User();
     }
