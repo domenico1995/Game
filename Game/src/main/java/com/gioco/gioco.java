@@ -25,7 +25,6 @@ public class gioco extends javax.swing.JFrame {
     public gioco() {
         initComponents();
         init();
-
     }
 
     private void init() {

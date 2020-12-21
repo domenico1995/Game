@@ -11,6 +11,10 @@ package com.gioco.manager;
  */
 public class Manager_gioco {
     
+    public String nome_gioco;
+    
     public void Manager_gioco(){}
+    
+    public void commando(){}
     
 }

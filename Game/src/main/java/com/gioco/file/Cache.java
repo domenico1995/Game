@@ -19,8 +19,7 @@ import java.util.logging.Logger;
 public class Cache {
     
     private String text1;
-    
-    private String text2;
+    ;
     
     public void Cache(){
         
@@ -37,11 +36,11 @@ public class Cache {
     
     //restituire e cancellare contenuto file cache
     public String getText1(){
+        try {
+            DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("resources/file/cache")));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Cache.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return text1;
-    }
-
-    public String getText2(){
-        return text1;
-    }
-    
+    }    
 }
