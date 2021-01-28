@@ -9,10 +9,9 @@ import com.server_dati.thread.GameThread;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.UUID;
 
 /**
- *
+ * 
  * @author user
  */
 public class main {
