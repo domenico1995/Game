@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cloud_2;
+package com.cloud.Service;
 
 import com.google.gson.Gson;
 import javax.ws.rs.Consumes;
@@ -33,7 +33,7 @@ import javax.ws.rs.core.Response;
  * @author pierpaolo
  */
 @Path("book")
-public class BookService {
+public class CloudService {
 
     
 

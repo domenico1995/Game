@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cloud_2;
+package com.cloud;
 
+import com.cloud.Service.CloudService;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,18 +28,31 @@ public class main_server {
     
     public static void main(String args[]) throws IOException{
         
+        main_server m = new main_server();
         URI baseUri = UriBuilder.fromUri("http://localhost/").port(4321).build();
-        ResourceConfig config = new ResourceConfig(BookService.class);
+        ResourceConfig config = new ResourceConfig(CloudService.class);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
         try {
             server.start();
-            System.out.println(String.format("Jersey app started with WADL available at "
-                    + "%sapplication.wadl\nHit enter to stop it...", "http://localhost:4321/"));
+            System.out.println(String.format("Cloud server in caricamento."));
+            m.run();
+            System.out.println(String.format("Cloud server pronto"));
+            
             System.in.read();
             server.shutdown();
         } catch (IOException ex) {
             Logger.getLogger(main_server.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+    }
+    
+    public void run(){
+    
+        //inserire codice relativo esecuzione programmi sul database.
+        
+        List<String> list = new ArrayList<>();
+        
+        
         
     }
     
