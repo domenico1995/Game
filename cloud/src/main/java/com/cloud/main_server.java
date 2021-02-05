@@ -51,9 +51,7 @@ public class main_server {
         //inserire codice relativo esecuzione programmi sul database.
         
         List<String> list = new ArrayList<>();
-        
-        
-        
+
     }
     
 }
