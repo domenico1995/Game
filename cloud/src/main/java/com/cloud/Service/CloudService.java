@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
  *
  * @author pierpaolo
  */
-@Path("book")
+@Path("server")
 public class CloudService {
 
     

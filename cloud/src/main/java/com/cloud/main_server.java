@@ -7,12 +7,9 @@ package com.cloud;
 
 import com.cloud.Service.CloudService;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.UriBuilder;
@@ -37,7 +34,6 @@ public class main_server {
             System.out.println(String.format("Cloud server in caricamento."));
             m.run();
             System.out.println(String.format("Cloud server pronto"));
-            
             System.in.read();
             server.shutdown();
         } catch (IOException ex) {
