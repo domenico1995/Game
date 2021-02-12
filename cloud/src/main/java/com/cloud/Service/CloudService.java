@@ -35,6 +35,11 @@ import javax.ws.rs.core.Response;
 @Path("server")
 public class CloudService {
 
-    
-
+    @PUT
+    @Path("")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response add(String json) {
+        return Response.ok().build();
+    }
 }
