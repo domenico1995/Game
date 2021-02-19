@@ -32,7 +32,7 @@ public final class engine {
         man_opzioni = new Manager_opzioni();
     }
 
-    public void getWord(String text, String text_display, int time) throws SQLException {
+    public void getWord(String text, String text_display, int time) throws SQLException  {
         
         if(text.equals("exit")){
             //opzioni di salvataggio
@@ -49,7 +49,8 @@ public final class engine {
             setTesto_display("riuscito\n");  
             man_user.creazione_utenti(u);
         }else{
-            
+            setTesto(text);
+            setTesto_display("aspetta");
         }
 
     }

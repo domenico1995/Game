@@ -61,7 +61,7 @@ public class gioco extends javax.swing.JFrame {
 
         textArea1.setBackground(new java.awt.Color(0, 0, 0));
         textArea1.setColumns(20);
-        textArea1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        textArea1.setFont(new java.awt.Font("Consolas", 1, 15)); // NOI18N
         textArea1.setForeground(new java.awt.Color(255, 255, 255));
         textArea1.setRows(5);
         textArea1.setBorder(null);
@@ -73,7 +73,7 @@ public class gioco extends javax.swing.JFrame {
         jScrollPane1.setViewportView(textArea1);
 
         textField1.setBackground(new java.awt.Color(0, 0, 0));
-        textField1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        textField1.setFont(new java.awt.Font("Consolas", 1, 15)); // NOI18N
         textField1.setForeground(new java.awt.Color(255, 255, 255));
         textField1.setBorder(null);
         textField1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -135,11 +135,11 @@ public class gioco extends javax.swing.JFrame {
             case KeyEvent.VK_ENTER:
                 if (!"".equals(testo)) {
                     textField1.setText("");
-            try {
-                en.getWord(testo, testo_display, 0);
-            } catch (SQLException ex) {
-                Logger.getLogger(gioco.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                    try {
+                        en.getWord(testo, testo_display, 0);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(gioco.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     testo_display = en.getTesto_display();
                     textArea1.append(testo + "\n" + testo_display);
 
@@ -188,9 +188,9 @@ public class gioco extends javax.swing.JFrame {
      */
     public static void main(String args[]) throws SQLException {
 
-        DBUsers us= new DBUsers();
+        DBUsers us = new DBUsers();
         us.connect();
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new gioco().setVisible(true);
