@@ -6,7 +6,9 @@
 package com.client;
 
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
+import com.client.data.testi;
+import com.client.service.service;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,22 +18,27 @@ import java.util.logging.Logger;
  */
 public class terminal extends javax.swing.JFrame {
 
-    public String testo_display= "C:>";
+    public String testo_display, risposta, percorso = "", comando = "";
 
-    public String risposta;
-    
     public engine en;
 
-    public terminal() {
+    public service ser;
+
+    public terminal() throws IOException {
         initComponents();
         init();
     }
 
-    private void init() {
+    private void init() throws IOException {
 
         jScrollPane1.setBorder(null);
         textArea1.setEditable(false);
         en = new engine();
+        ser = new service();
+        percorso = ser.terminal("cd") + "> ";
+        textArea1.setText(testi.testo_introduttivo.testo() + percorso);
+        testo_display = en.getTesto_display();
+        testo_display = textArea1.getText();
     }
 
     /**
@@ -100,29 +107,43 @@ public class terminal extends javax.swing.JFrame {
 
     private void textArea1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textArea1KeyReleased
 
-        
         testo_display = textArea1.getText();
         risposta = en.getRisposta();
-        
+
         switch (evt.getKeyCode()) {
 
             case KeyEvent.VK_ENTER:
-                 if (!"".equals(testo_display)) {
-                     en.getWord(testo_display, risposta);
-                    testo_display = en.getTesto_display();
-                    textArea1.append(testo_display + "\n" + risposta);
-
+                if (!"".equals(testo_display)) {
+                    try {
+                        en.getWord(testo_display, comando);
+                        testo_display = en.getTesto_display();
+                        risposta = en.getRisposta();
+                        if (!"".equals(risposta)) {
+                            textArea1.append(testo_display + "\n" + risposta + "\n" + percorso);
+                        } else {
+                            textArea1.append(testo_display + "\n" + percorso);
+                        }
+                        comando = "";
+                    } catch (IOException ex) {
+                        Logger.getLogger(terminal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 break;
 
             case KeyEvent.VK_BACK_SPACE:
-
+                //correggere difetto cancellazione
+                if (!"".equals(comando)) {
+                    testo_display = ser.cancella_ultimo(testo_display);
+                    comando = ser.cancella_ultimo(comando);
+                    textArea1.setText(testo_display);
+                }
                 break;
             default:
                 char c = evt.getKeyChar();
 
-                if (Character.isLetter(c) || Character.isWhitespace(c)) {
+                if (Character.isLetter(c) || Character.isWhitespace(c) || c == '.' || c == ';') {
                     testo_display = testo_display + c;
+                    comando = comando + c;
                     textArea1.setText(testo_display);
                 }
                 break;
@@ -157,9 +178,11 @@ public class terminal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 new terminal().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(terminal.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
