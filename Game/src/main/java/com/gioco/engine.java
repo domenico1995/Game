@@ -52,7 +52,7 @@ public final class engine {
             setTesto(text);
             setTesto_display("aspetta");
         }
-
+        
     }
     
     public String getTesto(){return testo;}

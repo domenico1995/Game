@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.client.data;
+package com.client.dati;
 
 /**
  *
@@ -11,7 +11,9 @@ package com.client.data;
  */
 public enum testi {
     
-    testo_introduttivo("benvenuto su Client. Per ulteriori informazioni digitare help.\n");
+    testo_introduttivo("benvenuto su Client. Per ulteriori informazioni digitare help.\n"),
+    groupId("inserire groupId:");
+    
     
     private final String testo;   // in kilograms
 

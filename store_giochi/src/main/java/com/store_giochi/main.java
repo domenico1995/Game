@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.server_dati;
+package com.store_giochi;
 
-import com.server_dati.Service.StoreItem;
+import com.store_giochi.Service.StoreItem;
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
@@ -22,7 +22,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class main {
     
     public static void main(String[] args) throws IOException{
-        URI baseUri = UriBuilder.fromUri("http://192.168.1.6/").port(4321).build();
+        URI baseUri = UriBuilder.fromUri("http://localhost/").port(4321).build();
         ResourceConfig config = new ResourceConfig(StoreItem.class);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
         try {

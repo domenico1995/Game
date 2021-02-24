@@ -1,15 +1,15 @@
 package com.client;
 
+import com.client.comandi.comandi;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
-public final class engine {
+public final class engine extends comandi {
 
     private String risposta = "";
+
 
     private String testo_display = "";
 
@@ -21,13 +21,15 @@ public final class engine {
 
     }
 
-    public void getWord(String text_display, String com) throws IOException {
+    public void getWord(String text_display, String com, String per) throws IOException {
 
         //setRisposta("prova");
-        System.out.println();
 
         if (com.equals("exit")) {
             System.exit(0);
+        } else if (trova_comando(com)) {
+            esegui_comando(com);
+            setRisposta(risp);
         } else {
             terminal(com);
         }
@@ -70,7 +72,6 @@ public final class engine {
             } else {
                 list = list + "\n" + line;
             }
-            System.out.println(line);
         }
 
         return list;
