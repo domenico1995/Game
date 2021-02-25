@@ -32,7 +32,6 @@ public class gioco extends javax.swing.JFrame {
         ser = new service();
         jScrollPane1.setBorder(null);
         textArea1.setEditable(false);
-        //textField2.setEditable(false);
         en = new engine();
         textArea1.append(en.getTesto_display());
 
@@ -198,7 +197,7 @@ public class gioco extends javax.swing.JFrame {
 
     }
 
-    private class UpdateTime extends TimerTask {
+    /*private class UpdateTime extends TimerTask {
 
         int second = 0;
 
@@ -209,7 +208,7 @@ public class gioco extends javax.swing.JFrame {
             });
         }
 
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

@@ -7,44 +7,25 @@ import java.sql.SQLException;
 
 public class Manager_user {
 
-    public DBUsers us;
 
-    public Connection_User cs;
+    public void Manager_user()  {
 
-    public void Manager_user() throws SQLException {
-
-        us = new DBUsers();
-        us.connect();
-        cs = new Connection_User();
+       
     }
 
     public void creazione_utenti(User utente) throws SQLException{
- 
         
-        if(cerca_utente(utente) == true){
-            if(cerca_utente_server(utente) != false){
-                nuovo_utente(utente);
+        if(DBUsers.cerca_user(utente) == false){
+            if(Connection_User.trova_utenti(utente) == false){
+                DBUsers.insertUsers(utente);
+                Connection_User.nuovo_utente(utente);
+            }else{
+                DBUsers.insertUsers(utente);
             }
-            System.out.println("hello");
         }else{
-         System.out.println("world");
+            if(Connection_User.trova_utenti(utente) == false){
+                Connection_User.nuovo_utente(utente);  
+            }
         }
     }    
-    
-    public void nuovo_utente(User utente) throws SQLException{
-        us.insertUsers(utente);
-    }
-    
-    public boolean cerca_utente(User utente) throws SQLException{
-        return us.cerca_user(utente);
-    }
-
-    public void nuovo_utente_server(User utente) {
-        cs.nuovo_utente(utente);
-    }
-
-    public boolean cerca_utente_server(User u) {
-        return cs.trova_utenti(u);
-    }
-
 }

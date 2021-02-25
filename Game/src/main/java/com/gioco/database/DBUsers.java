@@ -17,13 +17,12 @@ public class DBUsers {
             + " username VARCHAR(25) PRIMARY KEY)";
 
     public static final String SEARCH_USER = "SELECT * FROM user WHERE nome = ? and cognome = ? and username = ?";
-    
-    private Connection con;
 
-    private Properties pro;
-    
+    private static Connection con;
 
-    public void connect() throws SQLException {
+    private static Properties pro;
+
+    public static void connect() throws SQLException {
         pro = new Properties();
         pro.setProperty("user", "user");
         pro.setProperty("password", "1995");
@@ -33,13 +32,14 @@ public class DBUsers {
         }
     }
 
-    private void reconnect() throws SQLException {
+    private static void reconnect() throws SQLException {
         if (con != null && !con.isValid(0)) {
             con = DriverManager.getConnection("jdbc:h2:./resources/db/user", pro);
         }
     }
 
-    public void insertUsers(User u) throws SQLException {
+    public static void insertUsers(User u) throws SQLException {
+        connect();
         reconnect();
         try (PreparedStatement pre = con.prepareStatement("INSERT INTO user VALUES (?,?,?)")) {
             pre.setString(1, u.getNome());
@@ -50,9 +50,11 @@ public class DBUsers {
         }
     }
 
-    public boolean cerca_user(User user) throws SQLException {
+    public static boolean cerca_user(User user) throws SQLException {
+        connect();
         reconnect();
-        List<User> u = new ArrayList<>();
+        return false;
+        /*List<User> u = new ArrayList<>();
         try (PreparedStatement pre = con.prepareStatement(SEARCH_USER)) {
             pre.setString(1, user.getNome());
             pre.setString(2, user.getCognome());
@@ -63,9 +65,8 @@ public class DBUsers {
                     u.add(utente);
                 }
             }
-            return u.isEmpty() != true;
-        }finally{
-            return false;
-        }
+        }*/
+        //System.out.println((u.isEmpty()? "true" : "false"));
+        //return u.isEmpty() != true;
     }
 }

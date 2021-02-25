@@ -16,26 +16,28 @@ import javax.ws.rs.core.MediaType;
 
 public class Connection_User {
     
-    private Client client;
+    private static Client client;
     
-    private WebTarget web;
+    private static WebTarget web;
     
-    private Response resp;
+    private static Response resp;
     
-    private Gson gson;
+    private static Gson gson;
     
-    public void Connection_Server1(){    
+    public static void Connection_Server(){    
         client = ClientBuilder.newClient();
         web = client.target("http://localhost:4321");
         gson = new Gson();
     }
     
-    public void nuovo_utente(User u){
+    public static void nuovo_utente(User u){
+        Connection_Server();
         resp = web.path("user/add").request(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(gson.toJson(u), MediaType.APPLICATION_JSON));
     }
     
-    public boolean trova_utenti(User u){
+    public static boolean trova_utenti(User u){
+        Connection_Server();
         resp = web.path("user/find_user")
                 .queryParam("nome", "domenico")
                 .queryParam("cognome", "romanazzi")
@@ -44,7 +46,7 @@ public class Connection_User {
         return Boolean.parseBoolean(resp.readEntity(String.class));
     }
     
-    public boolean trova_nome_cognome(User u){
+    public static boolean trova_nome_cognome(User u){
         resp = web.path("user/find_nome_surname")
                 .queryParam("nome", "domenico")
                 .queryParam("cognome", "romanazzi")
