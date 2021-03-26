@@ -5,34 +5,26 @@ import com.gioco.data.testi;
 import com.gioco.manager.Manager_user;
 import com.gioco.manager.Manager_gioco;
 import com.gioco.manager.Manager_opzioni;
+import java.io.IOException;
 import java.sql.SQLException;
 
-public final class engine {
+public final class Engine {
 
     private String testo = "";
     
     private String testo_display = testi.ins_nome.testo();
     
-    private Manager_user man_user;
-    
-    private Manager_gioco man_gioco;
-    
-    private Manager_opzioni man_opzioni;
-    
     public User u;
 
-    public engine() {
+    public Engine() {
         init();
     }
 
     public void init() {
         u = new User();
-        man_user = new Manager_user();
-        man_gioco = new Manager_gioco();
-        man_opzioni = new Manager_opzioni();
     }
 
-    public void getWord(String text, String text_display, int time) throws SQLException  {
+    public void getWord(String text, String text_display) throws SQLException, IOException  {
         
         if(text.equals("exit")){
             //opzioni di salvataggio
@@ -47,10 +39,11 @@ public final class engine {
         } else if (text_display.equals(testi.ins_username.testo())) {
             u.setUsername(text);
             setTesto_display("riuscito\n");  
-            man_user.creazione_utenti(u);
+            Manager_user.creazione_utenti(u);
         }else{
             setTesto(text);
             setTesto_display("aspetta");
+            Manager_gioco.init("", "");
         }
         
     }

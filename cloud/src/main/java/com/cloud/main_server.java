@@ -5,11 +5,16 @@
  */
 package com.cloud;
 
+import com.cloud.DataBase.DBcloud;
 import com.cloud.Service.CloudService;
+import com.cloud.data.Progetto;
+import com.cloud.esecuzione.Esegui;
 import java.io.IOException;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.UriBuilder;
@@ -23,17 +28,15 @@ import org.glassfish.jersey.server.ResourceConfig;
  */
 public class main_server {
     
-    public static void main(String args[]) throws IOException{
-        
-        main_server m = new main_server();
+    public static void main(String args[]) throws IOException, SQLException{
         URI baseUri = UriBuilder.fromUri("http://localhost/").port(4321).build();
         ResourceConfig config = new ResourceConfig(CloudService.class);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
         try {
             server.start();
-            System.out.println(String.format("Cloud server in caricamento."));
-            m.run();
-            System.out.println(String.format("Cloud server pronto"));
+            System.out.println(String.format("Cloud server in caricamento ..."));
+            run();
+            System.out.println(String.format("Cloud server in esecuzione."));
             System.in.read();
             server.shutdown();
         } catch (IOException ex) {
@@ -42,14 +45,12 @@ public class main_server {
         
     }
     
-    public void run(){
-    
-        //inserire codice relativo esecuzione programmi sul database.
-        
-        List<String> list = new ArrayList<>();
-        
-        
-
+    public static void run() throws SQLException, IOException{
+        List<Progetto> list = new ArrayList<>();
+        list = DBcloud.leggi_contenuto();
+        ListIterator l = list.listIterator();
+        for(Progetto p : list){
+            Esegui.esegui(p);
+        }
     }
-    
 }

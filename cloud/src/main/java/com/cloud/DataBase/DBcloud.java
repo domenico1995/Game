@@ -5,6 +5,7 @@
  */
 package com.cloud.DataBase;
 
+import com.cloud.data.Progetto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,29 +24,42 @@ public class DBcloud {
 
     private final String percorso= "C:\\Program Files";
     
-    public static final String CREATE_USER = "CREATE TABLE IF NOT EXISTS user(nome VARCHAR(20), cognome VARCHAR(20),"
-            + " username VARCHAR(25) PRIMARY KEY)";
+    public static final String CREATE_USER = "CREATE TABLE IF NOT EXISTS cloud(nome_progetto VARCHAR(20), percorso VARCHAR(20),"
+            + " percorso_file VARCHAR(25))";
 
-    public static final String SEARCH_USER = "SELECT * FROM user WHERE nome = ? and cognome = ? and username = ?";
+    public static final String SEARCH_USER = "";
 
-    private Connection con;
+    private static Connection con;
 
-    private Properties pro;
+    private static Properties pro;
 
-    public void connect() throws SQLException {
+    public static void connect() throws SQLException {
         pro = new Properties();
         pro.setProperty("user", "user");
         pro.setProperty("password", "1995");
-        con = DriverManager.getConnection("jdbc:h2:./resources/db/user", pro);
+        con = DriverManager.getConnection("jdbc:h2:./resources/db/cloud", pro);
         try (Statement stm = con.createStatement()) {
             stm.executeUpdate(CREATE_USER);
         }
     }
 
-    private void reconnect() throws SQLException {
+    private static void reconnect() throws SQLException {
         if (con != null && !con.isValid(0)) {
-            con = DriverManager.getConnection("jdbc:h2:./resources/db/user", pro);
+            con = DriverManager.getConnection("jdbc:h2:./resources/db/cloud", pro);
         }
     }
 
+    public static List leggi_contenuto() throws SQLException{
+        reconnect();
+        List<Progetto> list = new ArrayList<>();
+        try (PreparedStatement pre = con.prepareStatement("SELECT * FROM cloud")) {
+            pre.executeQuery();
+            try (ResultSet re = pre.executeQuery()) {
+               Progetto p = new Progetto(re.getString(1), re.getString(2), re.getString(3));
+               list.add(p);
+            }
+        }
+        return list;
+    }   
+    
 }

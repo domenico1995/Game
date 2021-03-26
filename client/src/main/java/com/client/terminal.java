@@ -7,31 +7,31 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class terminal extends javax.swing.JFrame {
-    
+public class terminal extends javax.swing.JFrame{
+
     public String testo_display, risposta, percorso = "", comando = "";
-    
-    public engine en;
-    
+
+    public Engine en;
+
     public service ser;
-    
+
     public terminal() throws IOException {
         initComponents();
         init();
     }
-    
+
     private void init() throws IOException {
-        
+
         jScrollPane1.setBorder(null);
         setResizable(false);
-        en = new engine();
+        en = new Engine();
         ser = new service();
         percorso = ser.terminal("cd") + "> ";
         textArea1.setText(testi.testo_introduttivo.testo() + percorso);
         testo_display = en.getTesto_display();
         testo_display = textArea1.getText();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -92,12 +92,11 @@ public class terminal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textArea1KeyPressed
-        
+
         testo_display = textArea1.getText();
         risposta = en.getRisposta();
-        
+
         switch (evt.getKeyCode()) {
-            
             case KeyEvent.VK_ENTER:
                 if (!"".equals(testo_display)) {
                     try {
@@ -117,26 +116,23 @@ public class terminal extends javax.swing.JFrame {
                     }
                 }
                 break;
-            
+
             case KeyEvent.VK_BACK_SPACE:
                 //correggere difetto cancellazione
                 if (!"".equals(comando)) {
                     testo_display = ser.cancella_ultimo(testo_display);
                     comando = ser.cancella_ultimo(comando);
                     textArea1.setText(testo_display);
-                }else{}
+                } else {
+                }
                 break;
             default:
                 char c = evt.getKeyChar();
-                
                 if (Character.isLetter(c) || Character.isWhitespace(c) || c == '.' || c == ';') {
-                    testo_display = testo_display + c;
                     comando = comando + c;
-                    textArea1.setText(testo_display);
                 }
                 break;
         }
-        
     }//GEN-LAST:event_textArea1KeyPressed
 
     /**

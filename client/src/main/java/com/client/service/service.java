@@ -16,23 +16,16 @@ import java.io.InputStreamReader;
  */
 public class service {
     
-    public String cancella_ultimo(String text){
-        
+    public String cancella_ultimo(String text){        
         if ((text != null) && (text.length() > 0)) {
             return text.substring(0, text.length() - 1);
         }
-        
         return text;
     }
     
     public String terminal(String comm) throws IOException {
-
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("cmd", "/c", comm).directory(new File("C:\\Users\\domen\\Desktop\\test\\"));
-
-        Process process = processBuilder.start();
-        return printResults(process);
-
+        Process pro = Runtime.getRuntime().exec("cmd /c cd");
+        return printResults(pro);
     }
 
     public String printResults(Process process) throws IOException {
@@ -45,9 +38,7 @@ public class service {
             } else {
                 list = list + "\n" + line;
             }
-            System.out.println(line);
         }
-
         return list;
     }
     

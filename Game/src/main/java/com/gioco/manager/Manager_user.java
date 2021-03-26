@@ -7,13 +7,7 @@ import java.sql.SQLException;
 
 public class Manager_user {
 
-
-    public void Manager_user()  {
-
-       
-    }
-
-    public void creazione_utenti(User utente) throws SQLException{
+    public static void creazione_utenti(User utente) throws SQLException{
         
         if(DBUsers.cerca_user(utente) == false){
             if(Connection_User.trova_utenti(utente) == false){

@@ -53,8 +53,7 @@ public class DBUsers {
     public static boolean cerca_user(User user) throws SQLException {
         connect();
         reconnect();
-        return false;
-        /*List<User> u = new ArrayList<>();
+        List<User> u = new ArrayList<>();
         try (PreparedStatement pre = con.prepareStatement(SEARCH_USER)) {
             pre.setString(1, user.getNome());
             pre.setString(2, user.getCognome());
@@ -65,8 +64,7 @@ public class DBUsers {
                     u.add(utente);
                 }
             }
-        }*/
-        //System.out.println((u.isEmpty()? "true" : "false"));
-        //return u.isEmpty() != true;
+        }
+        return u.isEmpty() != true;
     }
 }

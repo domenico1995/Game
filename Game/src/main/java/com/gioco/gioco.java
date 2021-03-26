@@ -1,28 +1,23 @@
 package com.gioco;
 
-import com.gioco.database.DBUsers;
 import com.service.service;
-import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class gioco extends javax.swing.JFrame {
-
-    private final Timer time = new Timer();
+public class Gioco extends javax.swing.JFrame {
 
     private service ser;
 
     public String testo;
 
-    public engine en;
+    public Engine en;
 
     public String testo_display;
 
-    public gioco() {
+    public Gioco() {
         initComponents();
         init();
     }
@@ -32,7 +27,7 @@ public class gioco extends javax.swing.JFrame {
         ser = new service();
         jScrollPane1.setBorder(null);
         textArea1.setEditable(false);
-        en = new engine();
+        en = new Engine();
         textArea1.append(en.getTesto_display());
 
         //time.schedule(new UpdateTime(), 0, 1000);
@@ -135,9 +130,9 @@ public class gioco extends javax.swing.JFrame {
                 if (!"".equals(testo)) {
                     textField1.setText("");
                     try {
-                        en.getWord(testo, testo_display, 0);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(gioco.class.getName()).log(Level.SEVERE, null, ex);
+                        en.getWord(testo, testo_display);
+                    } catch (SQLException | IOException ex) {
+                        Logger.getLogger(Gioco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     testo_display = en.getTesto_display();
                     textArea1.append(testo + "\n" + testo_display);
@@ -171,9 +166,9 @@ public class gioco extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             textField1.setText("");
             try {
-                en.getWord(testo, testo_display, 0);
-            } catch (SQLException ex) {
-                Logger.getLogger(gioco.class.getName()).log(Level.SEVERE, null, ex);
+                en.getWord(testo, testo_display);
+            } catch (SQLException | IOException ex) {
+                Logger.getLogger(Gioco.class.getName()).log(Level.SEVERE, null, ex);
             }
             testo_display = en.getTesto_display();
             textArea1.append(testo + "\n" + testo_display);
@@ -187,12 +182,9 @@ public class gioco extends javax.swing.JFrame {
      */
     public static void main(String args[]) throws SQLException {
 
-        DBUsers us = new DBUsers();
-        us.connect();
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new gioco().setVisible(true);
+            new Gioco().setVisible(true);
         });
 
     }
