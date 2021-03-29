@@ -11,19 +11,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 
-/**
- *
- * @author domen
- */
+
 public class comandi {
 
-    private final String testo_maven = "[INFO] --- exec-maven-plugin:3.0.0:java (default-cli) @ adventure ---";
+    private final String testo_maven = "[INFO] --- exec-maven-plugin:3.0.0:java (default-cli) @ ";
     private String percorso, percorso_file;
-    public List<String> risp = new ArrayList<>();
+    private String risp = "";
     private InputStream inStream, inErrStream;
     private OutputStream outStream;
     private Process pro;
@@ -37,8 +31,6 @@ public class comandi {
             case "cd ..":
                 return true;
             case "dir":
-                return true;
-            case "cmd.exe /k":
                 return true;
             case "crea":
                 return true;
@@ -93,17 +85,17 @@ public class comandi {
         }
     }
 
-    public void setRisp(String line) {
-        if(flag == true){
-            risp.add(line);
-        }
-        if (line.contains(testo_maven)) {
-            flag = true;
+    public void setRisp(String line){
+        if (line != null){
+        risp += line + "\n";
         }
     }
-
-    public List getRisp() {
+    
+    public String getRisp(){
         return risp;
     }
 
+    public void resetRisp(){
+        risp = null;
+    }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gioco.manager;
+package com.gioco.service;
 
 import com.gioco.service.InputStreamLineBuffer;
 import java.io.BufferedWriter;
@@ -12,27 +12,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-/**
- *
- * @author user
- */
-public class Manager_gioco {
-    private static String risp;
-    private static InputStream inStream, inErrStream;
-    private static OutputStream outStream;
-    private static Process pro;
-    private static String testo;
-    private static Thread streamReader;
-    
-    public static void init(String per, String classe) throws IOException{
-        
-        esegui("cmd.exe /k");
-        esegui("cd " + per);
-        esegui("mvn exec:java -Dexec.mainClass=" + classe);
-        
-    }
 
-    public static void esegui(String command) {
+public class comandi {
+
+    private final String testo_maven = "[INFO] --- exec-maven-plugin:3.0.0:java (default-cli) @ ";
+    private String percorso, percorso_file;
+    private String risp = "";
+    private InputStream inStream, inErrStream;
+    private OutputStream outStream;
+    private Process pro;
+    private Thread streamReader;
+
+    public void esegui(String command) {
         if (outStream != null) {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
             try {
@@ -78,7 +69,7 @@ public class Manager_gioco {
         }
     }
 
-    public static void setRisp(String line){
+    public void setRisp(String line){
         if (line != null){
         risp += line + "\n";
         }

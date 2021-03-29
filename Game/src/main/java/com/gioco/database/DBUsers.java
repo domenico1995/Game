@@ -14,7 +14,7 @@ import java.util.Properties;
 public class DBUsers {
 
     public static final String CREATE_USER = "CREATE TABLE IF NOT EXISTS user(nome VARCHAR(20), cognome VARCHAR(20),"
-            + " username VARCHAR(25) PRIMARY KEY)";
+            + " username VARCHAR(25))";
 
     public static final String SEARCH_USER = "SELECT * FROM user WHERE nome = ? and cognome = ? and username = ?";
 

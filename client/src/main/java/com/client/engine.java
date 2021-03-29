@@ -2,6 +2,7 @@ package com.client;
 
 import com.client.comandi.comandi;
 import java.io.IOException;
+import java.util.ListIterator;
 
 public final class Engine extends comandi {
 
@@ -9,21 +10,25 @@ public final class Engine extends comandi {
 
     private String testo_display = "";
 
-    public void Engine() throws IOException{
-        
-    }
-    
-    public void getWord(String text_display, String com, String per) throws IOException {
+    public void Engine() throws IOException {
 
-        /*if (com.equals("exit")) {
+    }
+
+    public void getWord(String text_display, String com, String per) throws IOException, InterruptedException {
+
+        if (com.equals("exit")) {
             System.exit(0);
         } else if (trova_comando(com)) {
             esegui(com);
-            setRisposta(getList().toString());
-            //System.out.println(risposta);
+            Thread.sleep(4000);
+            setRisposta(getRisp());
+            resetRisp();
         } else {
-            
-        }   */
+            esegui(com);
+            Thread.sleep(1000);
+            setRisposta(getRisp());
+            resetRisp();
+        }
     }
 
     public String getRisposta() {
@@ -42,5 +47,4 @@ public final class Engine extends comandi {
         this.testo_display = text_display;
     }
 
-    
 }

@@ -41,7 +41,6 @@ public class Gioco extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea1 = new javax.swing.JTextArea();
         textField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -66,7 +65,20 @@ public class Gioco extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(textArea1);
 
-        textField1.setBackground(new java.awt.Color(0, 0, 0));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        textField1.setBackground(new java.awt.Color(40, 40, 40));
         textField1.setFont(new java.awt.Font("Consolas", 1, 15)); // NOI18N
         textField1.setForeground(new java.awt.Color(255, 255, 255));
         textField1.setBorder(null);
@@ -76,43 +88,19 @@ public class Gioco extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("->");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textField1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+            .addComponent(textField1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -123,39 +111,38 @@ public class Gioco extends javax.swing.JFrame {
 
         testo = textField1.getText();
         testo_display = en.getTesto_display();
-
+        
         switch (evt.getKeyCode()) {
-
             case KeyEvent.VK_ENTER:
                 if (!"".equals(testo)) {
                     textField1.setText("");
                     try {
-                        en.getWord(testo, testo_display);
-                    } catch (SQLException | IOException ex) {
+                        en.getWord(testo, testo_display, textArea1, textField1);
+                    } catch (SQLException | IOException | InterruptedException ex) {
                         Logger.getLogger(Gioco.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    testo = en.getTesto();
                     testo_display = en.getTesto_display();
-                    textArea1.append(testo + "\n" + testo_display);
 
+                    if ("".equals(testo)) {
+                        textArea1.append(testo_display);
+                    } else {
+                        textArea1.append(testo + "\n" + testo_display);
+                    }
                 }
                 break;
-
             case KeyEvent.VK_BACK_SPACE:
-
                 testo = ser.cancella_ultimo(testo);
                 textField1.setText(testo);
                 break;
-
             default:
                 char c = evt.getKeyChar();
-
-                if (Character.isLetter(c) || Character.isWhitespace(c)) {
+                if (Character.isLetter(c) || Character.isWhitespace(c) || c == '/' || c =='.') {
                     testo = testo + c;
                     textField1.setText(testo);
                 }
                 break;
         }
-
     }//GEN-LAST:event_textArea1KeyReleased
 
     private void textField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField1KeyReleased
@@ -166,14 +153,13 @@ public class Gioco extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             textField1.setText("");
             try {
-                en.getWord(testo, testo_display);
-            } catch (SQLException | IOException ex) {
+                en.getWord(testo, testo_display, textArea1, textField1);
+            } catch (SQLException | IOException | InterruptedException ex) {
                 Logger.getLogger(Gioco.class.getName()).log(Level.SEVERE, null, ex);
             }
             testo_display = en.getTesto_display();
             textArea1.append(testo + "\n" + testo_display);
         }
-
     }//GEN-LAST:event_textField1KeyReleased
 
     /**
@@ -203,7 +189,6 @@ public class Gioco extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea textArea1;

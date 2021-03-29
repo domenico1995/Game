@@ -53,15 +53,14 @@ public class DBUsersSingleton {
     }
 
     public void insertUsers(User user) throws SQLException {
-
         reconnect();
         try (PreparedStatement ps = con.prepareStatement("INSERT INTO users VALUES (?,?,?)")) {
             ps.setString(1, user.getNome());
             ps.setString(2, user.getCognome());
             ps.setString(3, user.getUsername());
             ps.executeUpdate();
+            ps.close();
         }
-
     }
 
     public User getUsers(String username) throws SQLException {
@@ -75,6 +74,7 @@ public class DBUsersSingleton {
                     u = new User(rs.getString(1), rs.getString(2), rs.getString(3));
                 }
             }
+            ps.close();
         }
         return u;
     }
@@ -84,6 +84,7 @@ public class DBUsersSingleton {
         try (PreparedStatement ps = con.prepareStatement("DELETE FROM users WHERE username = ?")) {
             ps.setString(1, username);
             ps.executeUpdate();
+            ps.close();
         }
     }
 
@@ -96,6 +97,7 @@ public class DBUsersSingleton {
         try (ResultSet rs = ps.executeQuery()) {
             flag = rs.next();
         }
+        ps.close();
         return flag;
     }
 
@@ -103,7 +105,6 @@ public class DBUsersSingleton {
         reconnect();
         boolean flag = false;
         PreparedStatement ps;
-        System.out.println("hello");
         ps = con.prepareStatement("SELECT * FROM users WHERE nome = ? AND cognome = ? AND username = ?");
         System.out.println("world");
         ps.setString(1, u.getNome());
@@ -115,6 +116,7 @@ public class DBUsersSingleton {
                 flag = true;
             }
         }
+        ps.close();
         return flag;
     }
 }

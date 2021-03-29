@@ -43,14 +43,12 @@ public class ItemService {
     @Produces("application/json")
     public Response get(@QueryParam("username") String username) {
         User u;
-        System.out.println("hello");
         try {
             u = DBUsersSingleton.getInstance().getUsers(username);
         } catch (SQLException ex) {
             return Response.serverError().build();
         }
         if (u != null) {
-            System.out.println(u.getCognome());
             Gson gson = new Gson();
             String js = gson.toJson(u);
             return Response.ok(js, MediaType.APPLICATION_JSON).build();
@@ -109,7 +107,6 @@ public class ItemService {
             u.setCognome(cognome);
             u.setUsername(username);
             flag = DBUsersSingleton.getInstance().trova_nome_cognome_username(u);
-            System.out.println(flag);
         } catch (SQLException ex) {
             return Response.serverError().build();
         }

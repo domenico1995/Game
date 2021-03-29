@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class terminal extends javax.swing.JFrame{
+public class terminal extends javax.swing.JFrame {
 
     public String testo_display, risposta, percorso = "", comando = "";
 
@@ -21,7 +21,6 @@ public class terminal extends javax.swing.JFrame{
     }
 
     private void init() throws IOException {
-
         jScrollPane1.setBorder(null);
         setResizable(false);
         en = new Engine();
@@ -105,13 +104,16 @@ public class terminal extends javax.swing.JFrame{
                             testo_display = en.getTesto_display();
                             risposta = en.getRisposta();
                             if (!"".equals(risposta)) {
-                                textArea1.append(testo_display + "\n" + risposta + "\n" + percorso);
+                                System.out.println(testo_display);
+                                System.out.println(risposta);
+                                System.out.println(percorso);
+                                textArea1.append(risposta + "\n" + percorso);
                             } else {
                                 textArea1.append(testo_display + "\n" + percorso);
                             }
                             comando = "";
                         }
-                    } catch (IOException ex) {
+                    } catch (IOException | InterruptedException ex) {
                         Logger.getLogger(terminal.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -119,11 +121,9 @@ public class terminal extends javax.swing.JFrame{
 
             case KeyEvent.VK_BACK_SPACE:
                 //correggere difetto cancellazione
-                if (!"".equals(comando)) {
-                    testo_display = ser.cancella_ultimo(testo_display);
+                if (comando != null) {
+                    System.out.println(comando);
                     comando = ser.cancella_ultimo(comando);
-                    textArea1.setText(testo_display);
-                } else {
                 }
                 break;
             default:

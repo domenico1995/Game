@@ -11,7 +11,7 @@ package com.store_giochi.Service;
  */
 public class Sistema {
     
-    private  String percorso;
+    private String percorso;
     
     public static String OS = System.getProperty("os.name").toLowerCase();
     
@@ -22,22 +22,21 @@ public class Sistema {
         if (isUnix()){
             percorso ="/home/domenico/Documenti/";
         }
-    }
-    
+    }    
     
     public String getPercorso(){
         return percorso;
     }
     
-    public boolean isWindows() {
+    public static boolean isWindows() {
         return (OS.contains("win"));
     }
 
-    public boolean isUnix() {
+    public static boolean isUnix() {
         return (OS.contains("nix") || OS.contains("nux") || OS.indexOf("aix") > 0);
     }
     
-    public String aggiunta(String s1, String s2){
+    public static String aggiunta(String s1, String s2){
         if (isWindows()){
             return s1+ "\\" +s2;
         }

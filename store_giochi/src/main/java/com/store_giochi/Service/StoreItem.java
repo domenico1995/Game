@@ -7,6 +7,7 @@ package com.store_giochi.Service;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -34,19 +35,14 @@ public class StoreItem {
     @Path("/add_list_file/")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response add_list_file(@QueryParam("account") String account, @QueryParam("progetto") String progetto, @QueryParam("lista_file") String lista) {
-        String s = os.aggiunta(percorso,account);
-        Cartella.crea_cartella(s);
-        s = os.aggiunta(s, progetto);
-        Cartella.crea_cartella(s);
-        
+    public Response add_list_file(@QueryParam("progetto") String progetto, @QueryParam("lista_file") String lista) {
+        Cartella.crea_cartella(progetto);
         Gson gson = new Gson();
         List<String> l = new ArrayList<>();
         l = gson.fromJson(lista, ArrayList.class);
         ListIterator<String> lit = l.listIterator();
-        
         while (lit.hasNext()) {
-            Cartella.crea_cartella(os.aggiunta(s, lit.next()));
+            Cartella.crea_cartella(os.aggiunta(progetto, lit.next()));
         }
         boolean flag = true;
         String js = gson.toJson(flag);
@@ -57,14 +53,12 @@ public class StoreItem {
     @Path("/add_list_file/")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response add_file(@QueryParam("account") String account, @QueryParam("progetto") String progetto, @QueryParam("percorso") String per, @QueryParam("file") String lista) {
-        String s = os.aggiunta(percorso,account);
-        s = os.aggiunta(s, progetto);
-        Cartella.inserire_file(s, lista);
+    public Response add_file(@QueryParam("progetto") String progetto, @QueryParam("percorso") String per, 
+            @QueryParam("file") String lista, @QueryParam("nome_file") String nome_file) throws IOException {
+        Cartella.inserire_file(progetto, lista, nome_file);
         Gson gson = new Gson();
         boolean flag = true;
         String js = gson.toJson(flag);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
-    
 }
