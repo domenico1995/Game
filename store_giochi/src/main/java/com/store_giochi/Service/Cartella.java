@@ -36,15 +36,7 @@ public class Cartella extends Sistema{
         }
     }
     
-    public static void leggi_file(String per, String l, String nome) throws IOException {
-        Gson gson = new Gson();
-        List<String> lista = new ArrayList<>();
-        lista = gson.fromJson(l, ArrayList.class);
-        try (FileWriter file = new FileWriter(aggiunta(per, nome))) {
-            ListIterator<String> i = lista.listIterator();
-            while (i.hasNext()) {
-                file.write(i.next()+ "\n");
-            }
-        }
+    public static List<String> leggi_file(String per, String nome) throws IOException {
+        return null;
     }
 }

@@ -11,7 +11,7 @@ package com.store_giochi.Service;
  */
 public class Sistema {
     
-    private String percorso;
+    private static String percorso;
     
     public static String OS = System.getProperty("os.name").toLowerCase();
     
@@ -24,7 +24,7 @@ public class Sistema {
         }
     }    
     
-    public String getPercorso(){
+    public static String getPercorso(){
         return percorso;
     }
     
