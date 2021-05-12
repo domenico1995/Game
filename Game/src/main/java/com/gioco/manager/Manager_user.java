@@ -1,25 +1,45 @@
 package com.gioco.manager;
 
 import com.gioco.connection.Connection_User;
-import com.gioco.data.User;
+import com.gioco.data.*;
 import com.gioco.database.DBUsers;
 import java.sql.SQLException;
 
 public class Manager_user {
 
-    public static void creazione_utenti(User utente) throws SQLException{
-        
-        if(DBUsers.cerca_user(utente) == false){
-            if(Connection_User.trova_utenti(utente) == false){
+    private static boolean utente_trovato = true;
+
+    public static String creazione_utenti(User utente) throws SQLException {
+
+        String list = "";
+
+        if (DBUsers.cerca_user(utente) == false) {
+            list += testi.nome_cognome_non_trovati.testo();
+            setUtente_trovato(false);
+            if (Connection_User.trova_utenti(utente) == false) {
+                list += testi.creazione_utente.testo();
                 DBUsers.insertUsers(utente);
                 Connection_User.nuovo_utente(utente);
-            }else{
+                list += testi.utente_creato.testo();
+            } else {
                 DBUsers.insertUsers(utente);
             }
-        }else{
-            if(Connection_User.trova_utenti(utente) == false){
-                Connection_User.nuovo_utente(utente);  
+        } else {
+            list += testi.utente_trovato.testo();
+            if (Connection_User.trova_utenti(utente) == false) {
+                Connection_User.nuovo_utente(utente);
+            } else {
+                list += testi.utente_trovato_server.testo();
             }
         }
-    }    
+        return list;
+    }
+
+    public static void setUtente_trovato(boolean b) {
+        utente_trovato = b;
+    }
+
+    public static boolean getUtente_trovato() {
+        return utente_trovato;
+    }
 }

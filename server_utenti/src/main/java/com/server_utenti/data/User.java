@@ -1,4 +1,4 @@
-package org.server.data;
+package com.server_utenti.data;
 
 public class User {
 

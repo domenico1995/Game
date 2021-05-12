@@ -11,11 +11,11 @@ public class Gioco extends javax.swing.JFrame {
 
     private service ser;
 
-    public String testo;
+    private String testo;
 
-    public Engine en;
+    private Engine en;
 
-    public String testo_display;
+    private String testo_display;
 
     public Gioco() {
         initComponents();
@@ -23,13 +23,11 @@ public class Gioco extends javax.swing.JFrame {
     }
 
     private void init() {
-
         ser = new service();
         jScrollPane1.setBorder(null);
         textArea1.setEditable(false);
         en = new Engine();
         textArea1.append(en.getTesto_display());
-
         //time.schedule(new UpdateTime(), 0, 1000);
     }
 
@@ -176,16 +174,13 @@ public class Gioco extends javax.swing.JFrame {
     }
 
     /*private class UpdateTime extends TimerTask {
-
         int second = 0;
-
         @Override
         public void run() {
             EventQueue.invokeLater(() -> {
                 //textField2.setText(String.valueOf(1000 - second++));
             });
         }
-
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

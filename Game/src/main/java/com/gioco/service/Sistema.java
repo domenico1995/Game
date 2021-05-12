@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.store_giochi.service;
 
-/**
- *
- * @author domen
- */
+package com.gioco.service;
+
+import java.io.File;
+
 public class Sistema {
     
     private static String percorso;
@@ -19,12 +13,14 @@ public class Sistema {
     
     public static String getPercorso(){
         if (isWindows()){
-            percorso ="C:\\Users\\domen\\Documents\\progetti";
-            Cartella.crea_cartella(percorso);
+            percorso ="C:\\Users\\domen\\Documents\\giochi";
+            File file = new File(percorso);
+        boolean mkdir = file.mkdir();
         }
         if (isUnix()){
-            percorso ="/home/domenico/Documenti/progetti";
-            Cartella.crea_cartella(percorso);
+            percorso ="/home/domenico/Documenti/giochi";
+            File file = new File(percorso);
+        boolean mkdir = file.mkdir();
         }
         return percorso;
     }

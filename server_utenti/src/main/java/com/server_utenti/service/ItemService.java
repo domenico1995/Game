@@ -1,8 +1,8 @@
-package com.server.service;
+package com.server_utenti.service;
 
 import com.google.gson.Gson;
-import org.server.data.User;
-import com.server.database.DBUsersSingleton;
+import com.server_utenti.data.User;
+import com.server_utenti.database.DBUsersSingleton;
 
 import java.sql.SQLException;
 import javax.ws.rs.Consumes;
@@ -17,9 +17,7 @@ import javax.ws.rs.core.Response;
 
 @Path("user")
 public class ItemService {
-    /*
-    inserimento utente
-    */
+   
     @PUT
     @Path("/add")
     @Consumes("application/json")

@@ -6,3 +6,7 @@
 /client/target/
 /store_giochi/target/
 /server_utenti/target/
+/store_giochi/cloud/gioco_1/target/
+/store_giochi/cloud/gioco_2/target/
+/store_giochi/cloud/gioco_3/target/
+/store_giochi/cloud/gioco_6/target/

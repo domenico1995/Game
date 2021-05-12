@@ -1,6 +1,6 @@
-package com.server.database;
+package com.server_utenti.database;
 
-import org.server.data.User;
+import com.server_utenti.data.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

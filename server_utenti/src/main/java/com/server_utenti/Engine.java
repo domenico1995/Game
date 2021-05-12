@@ -1,6 +1,6 @@
-package com.server;
+package com.server_utenti;
 
-import com.server.service.ItemService;
+import com.server_utenti.service.ItemService;
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
@@ -10,7 +10,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
-public class main {
+public class Engine {
 
     public static void main(String[] args){
 
@@ -22,7 +22,7 @@ public class main {
             System.in.read();
             server.shutdown();
         } catch (IOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

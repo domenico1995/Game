@@ -23,7 +23,7 @@ import java.util.Properties;
  */
 public class DBGame {
     
-    public static final String CREATE_GAME="CREATE TABLE IF NOT EXISTS game( testo1 VARCHAR(200), risposta VARCHAR(40), testo3 VARCHAR(200))";
+    private static final String CREATE_GAME="CREATE TABLE IF NOT EXISTS game( nome VARCHAR(20), percorso VARCHAR(60), percorso_file VARCHAR(30))";
     
     private static Connection con;
     
@@ -40,23 +40,30 @@ public class DBGame {
         }
     }
     
-    private static void reconnect() throws SQLException{
+    public static void reconnect() throws SQLException{
         if(con != null && !con.isValid(0)){
             con = DriverManager.getConnection("jdbc:h2:./resources/db/user", pro);
         }
     }
     
-    private static String leggi(String id, String op) throws SQLException{
+    public static List<String> leggi() throws SQLException{
         reconnect();
-        
-        try (PreparedStatement pre = con.prepareStatement("SELECT testo3 FROM game WHERE testo1 = ? AND risposta = ?")) {
-            pre.setString(1, id);
-            pre.setString(2, op);
+        try (PreparedStatement pre = con.prepareStatement("SELECT nome FROM game")) {
             pre.executeQuery();
             try (ResultSet re = pre.executeQuery()) {
-               
+               //da milgiorare
             }
         }
         return null;
     }   
+    
+    public static void scrivi() throws SQLException{
+        reconnect();
+        try (PreparedStatement pre = con.prepareStatement("SELECT nome FROM game")) {
+            pre.executeQuery();
+            try (ResultSet re = pre.executeQuery()) {
+               //da milgiorare
+            }
+        }
+    }
 }

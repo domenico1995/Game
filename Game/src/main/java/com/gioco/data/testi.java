@@ -1,35 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gioco.data;
 
-/**
- *
- * @author user
- */
 public enum testi {
     
-    ins_nome("inserire nome: "),
-    ins_cognome("inserire cognome: "),
+    ins_nome("Inserire nome: "),
+    ins_cognome("Inserire cognome: "),
     ins_username("inserire username: "),
-    nome_cognome_trovati("nome e cognome trovati\n"),
-    nome_cognome_non_trovati("nome e cognome non trovati\n"),
-    ritorno_utente("bentornato a Game Adventure!!!!\n"),
-    benvenuto("benvenuto a Game Adventure"),
-    creazione_utente("creazione dell'utente in corso ...\n"),
-    creazione_utente_errore("errore della creazione in server dell'utente\n"),
-    utente_creato("utente è stato creato e pronto all'uso.\n"),
-    server_connesso("server connesso è pronto all'uso.\n"),
-    server_non_connesso("server non connesso o in manutenzione\n" +"attendere prego\n"),
-    errore_server("errore del server\n"),
+    utente_trovato("utente trovato\n"),
+    utente_trovato_server("utente trovato nel server.\n"),
+    nome_cognome_non_trovati("Nome e cognome non trovati\n"),
+    ritorno_utente("Bentornato a Game Adventure!!!!\n"),
+    benvenuto("Benvenuto a Game Adventure.\n"),
+    creazione_utente("Creazione dell'utente in corso nel server.\n"),
+    creazione_utente_errore("Errore della creazione in server dell'utente\n"),
+    utente_creato("Utente è stato creato e pronto all'uso.\n"),
+    server_connesso("Server connesso è pronto all'uso.\n"),
+    server_non_connesso("Server non connesso o in manutenzione\n" +"attendere prego\n"),
+    errore_server("Errore del server\n"),
+    premere_tasto("Premere una lettera per continuare"),
     modalita_online("Game in modalità online\n"),
     modalita_offline("Game in modalita offline\n"),
-    gioco_winner("complimenti hai vinto il gioco!!!!\n"),
-    gioco_loser("hai perso!! riprova sei hai il coraggio.\n"),
-    testo_uscita("Questo gioco è offerto da DoppiaT entertaiment.\n");
-
+    gioco_winner("Complimenti hai vinto il gioco!!!!\n"),
+    gioco_loser("Hai perso!! riprova sei hai il coraggio.\n"),
+    testo_uscita("Questo gioco è offerto da DoppiaT Entertaiment.\n");
     
     private final String testo;   // in kilograms
 
