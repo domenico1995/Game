@@ -2,8 +2,6 @@ package com.gioco;
 
 import com.gioco.data.User;
 import com.gioco.data.testi;
-import com.gioco.manager.Manager_user;
-import com.gioco.manager.Manager_gioco;
 import static com.gioco.manager.Manager_user.creazione_utenti;
 import com.gioco.service.comandi;
 import java.io.IOException;
@@ -37,7 +35,7 @@ public final class Engine extends comandi {
     public void getWord(String text, String text_display, JTextArea jt, JTextField jf)
             throws SQLException, IOException, InterruptedException {
 
-        if (text.equals("exit")) {
+        if (text.equals("exit") || text.equals("esci")) {
             setTesto_display(testi.testo_uscita.testo());
             Thread.sleep(5000);
             System.exit(0);
@@ -47,26 +45,20 @@ public final class Engine extends comandi {
             setTesto_display(testi.ins_cognome.testo());
         } else if (text_display.equals(testi.ins_cognome.testo())) {
             u.setCognome(text);
+            setTesto(text);
             setTesto_display(testi.ins_username.testo());
         } else if (text_display.equals(testi.ins_username.testo())) {
+            setTesto(text);
             u.setUsername(text);
             reset_area(jt);
             reset_field(jf);
             String s = creazione_utenti(u);
             setTesto_display(s + testi.premere_tasto.testo());
-            
         } else if (text_display.contains(testi.premere_tasto.testo())) {
             reset_area(jt);
             reset_field(jf);
             setTesto("ciao " + u.getUsername() + "\n" + testi.ritorno_utente.testo());
-        } 
-        /*else {
-            esegui(text);
-            Thread.sleep(1000);
-            time_stop();
-            setTesto(text + "\n");
-            setTesto_display(getRisp());
-        }*/
+        } else{}
     }
 
     public String getTesto() {

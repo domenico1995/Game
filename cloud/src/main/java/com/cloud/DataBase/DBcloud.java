@@ -22,9 +22,9 @@ import java.util.Properties;
  */
 public class DBcloud {
 
-    private final String percorso= "C:\\Program Files";
-    
-    public static final String CREATE_USER = "CREATE TABLE IF NOT EXISTS cloud(nome_progetto VARCHAR(20), percorso VARCHAR(20),"
+    private final String percorso = "C:\\Program Files";
+
+    public static final String CREATE_USER = "CREATE TABLE IF NOT EXISTS cloud(nome_progetto VARCHAR(20) PRIMARY KEY, percorso VARCHAR(20),"
             + " percorso_file VARCHAR(25))";
 
     public static final String SEARCH_USER = "";
@@ -49,17 +49,22 @@ public class DBcloud {
         }
     }
 
-    public static List leggi_contenuto() throws SQLException{
+    public static List leggi_contenuto() throws SQLException {
+        connect();
         reconnect();
         List<Progetto> list = new ArrayList<>();
-        try (PreparedStatement pre = con.prepareStatement("SELECT * FROM cloud")) {
-            pre.executeQuery();
-            try (ResultSet re = pre.executeQuery()) {
-               Progetto p = new Progetto(re.getString(1), re.getString(2), re.getString(3));
-               list.add(p);
-            }
+        Statement sta = con.createStatement();
+        ResultSet re = sta.executeQuery("SELECT * FROM cloud");
+        while (re.next()) {
+            Progetto p = new Progetto(re.getString(1), re.getString(2), re.getString(3));
+            list.add(p);
         }
+
         return list;
-    }   
+    }
+
+    public static boolean vuoto() throws SQLException{
+        return leggi_contenuto() == null;
+    }
     
 }

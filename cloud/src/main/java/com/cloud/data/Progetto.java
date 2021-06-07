@@ -13,15 +13,24 @@ public class Progetto {
     
     private String nome_progetto;
 
-    private String percorso;
+    private String nome_eseuibile;
 
     private String percorso_file;
+    
+    private int pid;
 
     public Progetto(){}
     
-    public Progetto(String nome_progetto, String percorso, String percorso_file){
+    public Progetto(String nome_progetto, String nome_eseuibile, String percorso_file, int pid){
         this.nome_progetto = nome_progetto;
-        this.percorso = percorso;
+        this.nome_eseuibile = nome_eseuibile;
+        this.percorso_file = percorso_file;
+        this.pid = pid;
+    }
+
+    public Progetto(String nome_progetto, String nome_eseuibile, String percorso_file) {
+        this.nome_progetto = nome_progetto;
+        this.nome_eseuibile = nome_eseuibile;
         this.percorso_file = percorso_file;
     }
 
@@ -33,12 +42,12 @@ public class Progetto {
         this.nome_progetto = nome_progetto;
     }
 
-    public String getPercorso(){
-        return percorso;
+    public String getNome_eseguibile(){
+        return nome_eseuibile;
     }
 
-    public void setPercorso(String percorso){
-        this.percorso = percorso;
+    public void setNome_eseguibile(String nome_eseuibile){
+        this.nome_eseuibile = nome_eseuibile;
     }
 
     public String getPercorso_file(){
@@ -47,6 +56,14 @@ public class Progetto {
 
     public void setPercorso_file(String percorso_file){
         this.percorso_file = percorso_file;
+    }
+    
+    public int getPid(){
+        return pid;
+    }
+    
+    public void setPid(int pid){
+        this.pid = pid;
     }
     
 }

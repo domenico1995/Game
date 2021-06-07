@@ -14,6 +14,8 @@ public class DBUsersSingleton {
 
     private static DBUsersSingleton instance;
 
+    private final String percorso = "C:\\Users\\domen\\Documents\\progetti";
+    
     public static final String CREATE_TABLE_USERS = "CREATE TABLE IF NOT EXISTS users( nome VARCHAR(15), cognome VARCHAR(20)"
             + ", username VARCHAR(25), PRIMARY KEY(nome, cognome, username))";
 
@@ -40,7 +42,7 @@ public class DBUsersSingleton {
         pro = new Properties();
         pro.setProperty("user", "user");
         pro.setProperty("password", "1995");
-        con = DriverManager.getConnection("jdbc:h2:./resourcse/db/users", pro);
+        con = DriverManager.getConnection("jdbc:h2:./resources/db/users", pro);
         try (Statement stm = con.createStatement()) {
             stm.executeUpdate(CREATE_TABLE_USERS);
         }
@@ -48,7 +50,7 @@ public class DBUsersSingleton {
 
     private void reconnect() throws SQLException {
         if (con != null && !con.isValid(0)) {
-            con = DriverManager.getConnection("jdbc:h2:./resourcse/db/users", pro);
+            con = DriverManager.getConnection("jdbc:h2:./resources/db/users", pro);
         }
     }
 
@@ -90,14 +92,14 @@ public class DBUsersSingleton {
 
     public boolean trova_nome_cognome(User u) throws SQLException {
         reconnect();
-        PreparedStatement ps = con.prepareStatement("SELECT nome FROM users WHERE nome = ? and cognome = ?");
-        ps.setString(1, u.getNome());
-        ps.setString(2, u.getCognome());
         boolean flag;
-        try (ResultSet rs = ps.executeQuery()) {
-            flag = rs.next();
+        try (PreparedStatement ps = con.prepareStatement("SELECT nome FROM users WHERE nome = ? and cognome = ?")) {
+            ps.setString(1, u.getNome());
+            ps.setString(2, u.getCognome());
+            try (ResultSet rs = ps.executeQuery()) {
+                flag = rs.next();
+            }
         }
-        ps.close();
         return flag;
     }
 
@@ -106,7 +108,6 @@ public class DBUsersSingleton {
         boolean flag = false;
         PreparedStatement ps;
         ps = con.prepareStatement("SELECT * FROM users WHERE nome = ? AND cognome = ? AND username = ?");
-        System.out.println("world");
         ps.setString(1, u.getNome());
         ps.setString(2, u.getCognome());
         ps.setString(3, u.getUsername());

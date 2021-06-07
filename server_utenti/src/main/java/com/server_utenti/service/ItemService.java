@@ -28,8 +28,10 @@ public class ItemService {
         try {
             DBUsersSingleton.getInstance().insertUsers(u);
         } catch (SQLException ex) {
+            System.out.println("Inserimento: fallito");
             return Response.serverError().build();
         }
+        System.out.println("Inserimento: " + u.getNome() + " " + u.getCognome() + " " + u.getUsername());
         return Response.ok().build();
     }
 
@@ -49,8 +51,10 @@ public class ItemService {
         if (u != null) {
             Gson gson = new Gson();
             String js = gson.toJson(u);
+            System.out.println("Ricerca: " + username);
             return Response.ok(js, MediaType.APPLICATION_JSON).build();
         } else {
+            System.out.println("Ricerca: falita");
             return Response.serverError().build();
         }
     }
@@ -66,6 +70,7 @@ public class ItemService {
         } catch (SQLException ex) {
             return Response.serverError().build();
         }
+        System.out.println("Cancelazione: " + username);
         return Response.ok().build();
     }
 
@@ -89,6 +94,7 @@ public class ItemService {
 
         Gson gson = new Gson();
         String js = gson.toJson(flag);
+        System.out.println("Controllo utente: " + nome + " " + cognome);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
     /*
@@ -110,6 +116,19 @@ public class ItemService {
         }
         Gson gson = new Gson();
         String js = gson.toJson(flag);
+        System.out.println("Controllo utente: " + nome + " " + cognome + " " + username);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
+    
+    @GET
+    @Path("/controll")
+    @Produces("application/json")
+    public Response controll() {
+        
+        String s = "hello world";
+        System.out.println("Controllo: applicazione in esecuzione");
+        return Response.ok(s, MediaType.APPLICATION_JSON).build();
+        
+    }
+    
 }

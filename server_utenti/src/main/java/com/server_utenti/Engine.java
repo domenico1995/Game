@@ -14,7 +14,7 @@ public class Engine {
 
     public static void main(String[] args){
 
-        URI baseUri = UriBuilder.fromUri("http://localhost").port(4321).build();
+        URI baseUri = UriBuilder.fromUri("http://localhost/").port(4321).build();
         ResourceConfig config = new ResourceConfig(ItemService.class);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
         try {

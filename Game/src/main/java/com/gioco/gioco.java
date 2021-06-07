@@ -112,6 +112,7 @@ public class Gioco extends javax.swing.JFrame {
         
         switch (evt.getKeyCode()) {
             case KeyEvent.VK_ENTER:
+                
                 if (!"".equals(testo)) {
                     textField1.setText("");
                     try {
@@ -128,6 +129,7 @@ public class Gioco extends javax.swing.JFrame {
                         textArea1.append(testo + "\n" + testo_display);
                     }
                 }
+                
                 break;
             case KeyEvent.VK_BACK_SPACE:
                 testo = ser.cancella_ultimo(testo);
