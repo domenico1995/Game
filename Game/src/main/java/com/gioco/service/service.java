@@ -9,7 +9,7 @@ package com.service;
  *
  * @author user
  */
-public class service {
+public class Service {
     
     public String cancella_ultimo(String text){
         

@@ -13,10 +13,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 
-public class comandi {
+public class Comandi {
 
-    private final String testo_maven = "[INFO] --- exec-maven-plugin:3.0.0:java (default-cli) @ ";
-    private String percorso, percorso_file;
     private String risp = "";
     private InputStream inStream, inErrStream;
     private OutputStream outStream;
@@ -80,6 +78,6 @@ public class comandi {
     }
 
     public void resetRisp(){
-        risp = null;
+        risp = "";
     }
 }

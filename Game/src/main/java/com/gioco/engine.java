@@ -1,28 +1,23 @@
 package com.gioco;
 
 import com.gioco.data.User;
-import com.gioco.data.testi;
+import com.gioco.data.Testi;
 import static com.gioco.manager.Manager_user.creazione_utenti;
-import com.gioco.service.comandi;
+import com.gioco.service.Comandi;
+import com.gioco.service.Threads;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-public final class Engine extends comandi {
+public final class Engine extends Comandi {
 
     private String testo = "";
-
-    private String testo_display =testi.benvenuto.testo() + testi.ins_nome.testo();
-
-    private JTextArea j;
-
+    private String testo_display = Testi.benvenuto.testo() + Testi.ins_nome.testo();
     private User u;
-
-    private List<comandi> list;
+    private List<String> list;
+    int i = 0;
 
     public Engine() {
         init();
@@ -30,35 +25,42 @@ public final class Engine extends comandi {
 
     public void init() {
         u = new User();
+        list = new ArrayList<>();
     }
 
     public void getWord(String text, String text_display, JTextArea jt, JTextField jf)
             throws SQLException, IOException, InterruptedException {
 
         if (text.equals("exit") || text.equals("esci")) {
-            setTesto_display(testi.testo_uscita.testo());
-            Thread.sleep(5000);
-            System.exit(0);
-        } else if (text_display.equals(testi.benvenuto.testo() + testi.ins_nome.testo())) {
+            setTesto_display(Testi.testo_uscita.testo());
+            setTesto(text);
+            setTesto_display(Testi.testo_uscita.testo());
+            Threads t = new Threads();
+            t.start();
+        } else if (text_display.equals(Testi.benvenuto.testo() + Testi.ins_nome.testo())) {
             u.setNome(text);
             setTesto(text);
-            setTesto_display(testi.ins_cognome.testo());
-        } else if (text_display.equals(testi.ins_cognome.testo())) {
+            setTesto_display(Testi.ins_cognome.testo());
+        } else if (text_display.equals(Testi.ins_cognome.testo())) {
             u.setCognome(text);
             setTesto(text);
-            setTesto_display(testi.ins_username.testo());
-        } else if (text_display.equals(testi.ins_username.testo())) {
+            setTesto_display(Testi.ins_username.testo());
+        } else if (text_display.equals(Testi.ins_username.testo())) {
             setTesto(text);
             u.setUsername(text);
-            reset_area(jt);
-            reset_field(jf);
+            //reset_area(jt);
+            //reset_field(jf);
             String s = creazione_utenti(u);
-            setTesto_display(s + testi.premere_tasto.testo());
-        } else if (text_display.contains(testi.premere_tasto.testo())) {
+            setTesto_display(s + Testi.premere_tasto.testo());
+        } else if (text_display.contains(Testi.premere_tasto.testo())) {
             reset_area(jt);
             reset_field(jf);
-            setTesto("ciao " + u.getUsername() + "\n" + testi.ritorno_utente.testo());
-        } else{}
+            setTesto("ciao " + u.getUsername() + "\n" + Testi.ritorno_utente.testo());
+        } else {
+            //esegui(text);
+            //time_stop();
+            //setTesto(text + "\n");
+        }
     }
 
     public String getTesto() {
@@ -87,14 +89,18 @@ public final class Engine extends comandi {
         setTesto("");
     }
 
-    public void time_stop() {
-        if (getRisp() == null) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    /**
+     *
+     * @throws InterruptedException
+     */
+    public void time_stop() throws InterruptedException {
+        while (getRisp().length() == 0) {
+            Thread.sleep(100);
         }
+        Thread.sleep(500);
+        list.add(getRisp());
+        resetRisp();
+        setTesto_display(list.get(list.size() - 1));
+        
     }
-
 }

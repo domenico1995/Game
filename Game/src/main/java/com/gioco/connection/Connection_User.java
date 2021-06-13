@@ -39,17 +39,17 @@ public class Connection_User {
     public static boolean trova_utenti(User u){
         Connection_Server();
         resp = web.path("user/find_user")
-                .queryParam("nome", "domenico")
-                .queryParam("cognome", "romanazzi")
-                .queryParam("username", "doppiat")
+                .queryParam("nome", u.getNome())
+                .queryParam("cognome", u.getCognome())
+                .queryParam("username", u.getUsername())
                 .request(MediaType.APPLICATION_JSON).get();
         return Boolean.parseBoolean(resp.readEntity(String.class));
     }
     
     public static boolean trova_nome_cognome(User u){
         resp = web.path("user/find_nome_surname")
-                .queryParam("nome", "domenico")
-                .queryParam("cognome", "romanazzi")
+                .queryParam("nome", u.getNome())
+                .queryParam("cognome", u.getCognome())
                 .request(MediaType.APPLICATION_JSON).get();
         return Boolean.parseBoolean(resp.readEntity(String.class));
     }

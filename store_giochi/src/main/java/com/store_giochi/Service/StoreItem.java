@@ -2,7 +2,8 @@ package com.store_giochi.service;
 
 import com.google.gson.Gson;
 import static com.store_giochi.service.Sistema.*;
-import java.io.File;
+import static com.store_giochi.service.Cartella.*;
+import com.store_giochi.data.MyFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +21,7 @@ import javax.ws.rs.core.Response;
 public class StoreItem {
 
     public final String percorso = aggiunta(getPercorso(), "cloud");
-    
+
     public final String percorso_replace = getPercorso() + getCarattere() + "cloud" + getCarattere();
 
     @GET
@@ -69,7 +70,7 @@ public class StoreItem {
         List<String> list = new ArrayList<>();
         Cartella.leggi_lista_file(progetto, s);
         ListIterator l = s.listIterator();
-        while(l.hasNext()){
+        while (l.hasNext()) {
             String t = (String) l.next();
             list.add(t.substring(percorso_replace.length()));
         }
@@ -85,38 +86,35 @@ public class StoreItem {
     @Produces("application/json")
     public Response return_file(@QueryParam("percorso") String per) throws IOException {
         per = aggiunta(percorso, per);
-        List<String> s = Cartella.leggi_file(per);
+        MyFile m = new MyFile();
+        m = (MyFile) Cartella.leggi_file(per);
         Gson gson = new Gson();
-        String js = gson.toJson(s);
+        String js = gson.toJson(m);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
-    
+
     @GET
     @Path("/controllo_file/")
     @Consumes("application/json")
     @Produces("application/json")
     public Response controllo_file(@QueryParam("progetto") String per) throws IOException {
-        boolean flag;
-        String s = per;
-        flag = controlloFile(s);
+        boolean flag = false;
+        flag = controllo_File(aggiunta("cloud", per));
         Gson gson = new Gson();
         String js = gson.toJson(flag);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
 
+    
+
     @GET
     @Path("/get_percorso/")
     @Produces("application/json")
-    public Response Percorso(){
+    public Response Percorso() {
         String s = getPercorso() + getCarattere();
         return Response.ok(s, MediaType.APPLICATION_JSON).build();
     }
-    
-    private boolean controlloFile(String s) {
-        File dir = new File(percorso);
-        return dir.isDirectory();
-    }
-    
+
     @GET
     @Path("/lista_file/")
     @Consumes("application/json")
@@ -127,7 +125,7 @@ public class StoreItem {
         List<String> list = new ArrayList<>();
         Cartella.lista_file(per, s);
         ListIterator l = s.listIterator();
-        while(l.hasNext()){
+        while (l.hasNext()) {
             String t = (String) l.next();
             list.add(t.substring(percorso_replace.length()));
         }

@@ -14,22 +14,22 @@ public class Manager_user {
         String list = "";
 
         if (DBUsers.cerca_user(utente) == false) {
-            list += testi.nome_cognome_non_trovati.testo();
+            list += Testi.nome_cognome_non_trovati.testo();
             setUtente_trovato(false);
             if (Connection_User.trova_utenti(utente) == false) {
-                list += testi.creazione_utente.testo();
+                list += Testi.creazione_utente.testo();
                 DBUsers.insertUsers(utente);
                 Connection_User.nuovo_utente(utente);
-                list += testi.utente_creato.testo();
+                list += Testi.utente_creato.testo();
             } else {
                 DBUsers.insertUsers(utente);
             }
         } else {
-            list += testi.utente_trovato.testo();
+            list += Testi.utente_trovato.testo();
             if (Connection_User.trova_utenti(utente) == false) {
                 Connection_User.nuovo_utente(utente);
             } else {
-                list += testi.utente_trovato_server.testo();
+                list += Testi.utente_trovato_server.testo();
             }
         }
         return list;

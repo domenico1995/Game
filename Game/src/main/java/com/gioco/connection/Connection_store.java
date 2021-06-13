@@ -1,6 +1,7 @@
 
 package com.gioco.connection;
 
+import com.gioco.data.MyFile;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,24 +35,25 @@ public class Connection_store {
         return gson.fromJson(resp.readEntity(String.class), ArrayList.class);
     }
 
-    public static List<String> leggi_file(String percorso) {
+    public static MyFile leggi_file(String percorso) {
         Connection_store();
-        resp = web.path("store/read_lista_file")
+        resp = web.path("store/read_file")
                 .queryParam("percorso", percorso)
                 .request(MediaType.APPLICATION_JSON).get();
-        return gson.fromJson(resp.readEntity(String.class), ArrayList.class);
+        return gson.fromJson(resp.readEntity(String.class), MyFile.class);
     }
     
     public static boolean controllo_file(String percorso) {
         Connection_store();
         resp = web.path("store/controllo_file")
-                .queryParam("percorso", percorso)
+                .queryParam("progetto", percorso)
                 .request(MediaType.APPLICATION_JSON).get();
         return Boolean.parseBoolean(resp.readEntity(String.class));
     }
     
     public static String percorso(){
-        resp = web.path("sore/get_percorso(").request(MediaType.APPLICATION_JSON).get();
+        Connection_store();
+        resp = web.path("store/get_percorso(").request(MediaType.APPLICATION_JSON).get();
         return resp.readEntity(String.class);
     }
 }

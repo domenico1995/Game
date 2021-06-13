@@ -1,6 +1,6 @@
 package com.gioco.data;
 
-public enum testi {
+public enum Testi {
     
     ins_nome("Inserire nome: "),
     ins_cognome("Inserire cognome: "),
@@ -13,19 +13,14 @@ public enum testi {
     creazione_utente("Creazione dell'utente in corso nel server.\n"),
     creazione_utente_errore("Errore della creazione in server dell'utente\n"),
     utente_creato("Utente è stato creato e pronto all'uso.\n"),
-    server_connesso("Server connesso è pronto all'uso.\n"),
-    server_non_connesso("Server non connesso o in manutenzione\n" +"attendere prego\n"),
-    errore_server("Errore del server\n"),
     premere_tasto("Premere una lettera per continuare"),
-    modalita_online("Game in modalità online\n"),
-    modalita_offline("Game in modalita offline\n"),
     gioco_winner("Complimenti hai vinto il gioco!!!!\n"),
     gioco_loser("Hai perso!! riprova sei hai il coraggio.\n"),
     testo_uscita("Questo gioco è offerto da DoppiaT Entertaiment.\n");
     
     private final String testo;   // in kilograms
 
-    testi(String testo) {
+    Testi(String testo) {
         this.testo = testo;
     }
     

@@ -1,6 +1,6 @@
 package com.gioco;
 
-import com.service.service;
+import com.service.Service;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class Gioco extends javax.swing.JFrame {
 
-    private service ser;
+    private Service ser;
 
     private String testo;
 
@@ -23,7 +23,7 @@ public class Gioco extends javax.swing.JFrame {
     }
 
     private void init() {
-        ser = new service();
+        ser = new Service();
         jScrollPane1.setBorder(null);
         textArea1.setEditable(false);
         en = new Engine();
