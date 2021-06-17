@@ -19,7 +19,7 @@ public class DBUsersSingleton {
     public static final String CREATE_TABLE_USERS = "CREATE TABLE IF NOT EXISTS users( nome VARCHAR(15), cognome VARCHAR(20)"
             + ", username VARCHAR(25), PRIMARY KEY(nome, cognome, username))";
 
-    public Connection con;
+    private Connection con;
 
     private Properties pro;
 
@@ -48,7 +48,7 @@ public class DBUsersSingleton {
         }
     }
 
-    private void reconnect() throws SQLException {
+    public void reconnect() throws SQLException {
         if (con != null && !con.isValid(0)) {
             con = DriverManager.getConnection("jdbc:h2:./resources/db/users", pro);
         }
@@ -99,6 +99,7 @@ public class DBUsersSingleton {
             try (ResultSet rs = ps.executeQuery()) {
                 flag = rs.next();
             }
+            ps.close();
         }
         return flag;
     }

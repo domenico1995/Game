@@ -68,7 +68,7 @@ public class Cartella extends Sistema {
     }
 
     public static boolean controllo_File(String per) {
-        File dir = new File(aggiunta(percorso, per));
+        File dir = new File(aggiunta(getPercorso(), per));
         return dir.isDirectory();
     }
 }

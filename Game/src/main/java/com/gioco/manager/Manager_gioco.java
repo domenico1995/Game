@@ -1,36 +1,67 @@
 package com.gioco.manager;
 
-import static com.gioco.connection.Connection_store.*;
-import com.gioco.data.MyFile;
-import static com.gioco.service.Sistema.getCarattere;
-import static com.gioco.service.Sistema.getPercorso;
-import java.io.File;
+import static com.gioco.connection.Connection_store.numero_giochi;
+import com.gioco.esecuzione.Esegui;
 
 public class Manager_gioco {
-
-    public Manager_gioco(){}
     
-    public void init(String gioco) {
+    private static int numero = numero_giochi().size() - 2;
+    private static final Esegui[] list = new Esegui[numero];
+    private static int posizione = 0;
+    private static String risposta = "";
+
+    public static void inizio() throws InterruptedException {
+        for (int i = 0; i < numero; i++) {
+            list[i] = new Esegui();
+        }
+        setRisposta("====================================================\n");
+        setRisposta("livello gioco -> " + (posizione + 1) + "\n");
+        creazione();
+    }
+
+    public static void testo(String testo) throws InterruptedException {
+
+        list[posizione].esegui(testo);
+        list[posizione].time_stop();
+
+        setRisposta(list[posizione].getRisp());
+
+        if (list[posizione].getRisp().contains("Porta") || list[posizione].getRisp().contains("Scale giu")) {
+            successivo();
+        }
         
-        String s = getPercorso() + getCarattere() + gioco;
-        System.out.println(s);
-        
-        //da test_store prendere il corpo delle funzioni della creazione progetto
-        File dir = new File(s);
-        if (dir.exists()) {
-            File f = new File(s + getCarattere() + "target");
-            f.mkdir();
-        }else{
-            dir.mkdir();
-            File f = new File(s + getCarattere() + "target");
-            f.mkdir();    
-            MyFile list = leggi_file(gioco + getCarattere() + "target");
+        list[posizione].resetRisp();
+    }
+
+    public static void creazione() throws InterruptedException {
+        if (posizione < numero) {
+            int i = posizione + 1;
+            list[posizione].caricamento("gioco_" + i);
+            list[posizione].time_stop();
+            setRisposta(list[posizione].getRisp());
+            list[posizione].resetRisp();
         }
     }
-    
-    
-    public static void main(String[] args){
-        Manager_gioco m = new Manager_gioco();
-        m.init("gioco_1");
+
+    public static void successivo() throws InterruptedException {
+        posizione++;
+        setRisposta("====================================================\n");
+        setRisposta("livello gioco -> " + (posizione) + "\n");
+        if (list[posizione + 1].getFlag() == false) {
+            creazione();
+        }
+        list[posizione].getRisp();
+    }
+
+    public static void setRisposta(String line) {
+        risposta += line;
+    }
+
+    public static String getRisposta() {
+        return risposta;
+    }
+
+    public static void resetRisposta() {
+        risposta = "";
     }
 }

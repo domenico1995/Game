@@ -1,9 +1,9 @@
-package com.gioco;
+ package com.gioco;
 
 import com.gioco.data.User;
 import com.gioco.data.Testi;
-import static com.gioco.manager.Manager_user.creazione_utenti;
-import com.gioco.service.Comandi;
+import static com.gioco.manager.Manager_user.*;
+import static com.gioco.manager.Manager_gioco.*;
 import com.gioco.service.Threads;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,30 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-public final class Engine extends Comandi {
+public final class Engine {
 
     private String testo = "";
     private String testo_display = Testi.benvenuto.testo() + Testi.ins_nome.testo();
     private User u;
     private List<String> list;
-    int i = 0;
 
-    public Engine() {
+    public Engine() throws InterruptedException {
         init();
     }
 
-    public void init() {
+    public void init() throws InterruptedException {
         u = new User();
         list = new ArrayList<>();
+        inizio();
     }
 
     public void getWord(String text, String text_display, JTextArea jt, JTextField jf)
             throws SQLException, IOException, InterruptedException {
 
         if (text.equals("exit") || text.equals("esci")) {
-            setTesto_display(Testi.testo_uscita.testo());
             setTesto(text);
+            reset_area(jt);
+            reset_field(jf);
             setTesto_display(Testi.testo_uscita.testo());
+            
             Threads t = new Threads();
             t.start();
         } else if (text_display.equals(Testi.benvenuto.testo() + Testi.ins_nome.testo())) {
@@ -48,18 +50,18 @@ public final class Engine extends Comandi {
         } else if (text_display.equals(Testi.ins_username.testo())) {
             setTesto(text);
             u.setUsername(text);
-            //reset_area(jt);
-            //reset_field(jf);
             String s = creazione_utenti(u);
             setTesto_display(s + Testi.premere_tasto.testo());
         } else if (text_display.contains(Testi.premere_tasto.testo())) {
             reset_area(jt);
             reset_field(jf);
-            setTesto("ciao " + u.getUsername() + "\n" + Testi.ritorno_utente.testo());
+            setTesto("ciao " + u.getUsername() + "\n" + Testi.ritorno_utente.testo()+ getRisposta());
         } else {
-            //esegui(text);
-            //time_stop();
-            //setTesto(text + "\n");
+            list.add(testo);
+            resetRisposta();
+            testo(text);
+            setTesto(text);
+            setTesto_display(getRisposta());
         }
     }
 
@@ -87,20 +89,5 @@ public final class Engine extends Comandi {
     public void reset_field(JTextField jf) {
         jf.setText("");
         setTesto("");
-    }
-
-    /**
-     *
-     * @throws InterruptedException
-     */
-    public void time_stop() throws InterruptedException {
-        while (getRisp().length() == 0) {
-            Thread.sleep(100);
-        }
-        Thread.sleep(500);
-        list.add(getRisp());
-        resetRisp();
-        setTesto_display(list.get(list.size() - 1));
-        
     }
 }

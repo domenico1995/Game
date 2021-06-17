@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gioco.database;
+package com.server_utenti.database;
 
-import com.gioco.data.User;
+import com.server_utenti.data.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,23 +18,32 @@ import java.util.Properties;
 
 /**
  *
- * @author user
+ * @author domen
  */
-public class DBGame {
+public class DBStoreUser {
 
+    private static DBStoreUser instance;
     private static Connection con;
     private static Properties pro;
-    private static User u;
-
+    
     public static final String CREATE_TABLE_USERS = "CREATE TABLE IF NOT EXISTS users( comando VARCHAR(15))";
 
-    private DBGame(User utente) {
-        u = new User();
-        u = utente;
+    private DBStoreUser(User u) {
     }
 
+    public synchronized static DBStoreUser getInstance(User u) {
+        if (instance == null) {
+            instance = new DBStoreUser(u);
+            try {
+                instance.connect(u);
+            } catch (SQLException ex) {
+                System.err.println(ex);
+            }
+        }
+        return instance;
+    }
 
-    public static void connect(User u) throws SQLException {
+    public void connect(User u) throws SQLException {;
         pro = new Properties();
         String s = u.getNome() + "_" + u.getCognome() + "_" + u.getUsername();
         pro.setProperty("user", s);
@@ -45,36 +54,35 @@ public class DBGame {
         }
     }
 
-    public static void reconnect(User u) throws SQLException {
+    public void reconnect(User u) throws SQLException {
         if (con != null && !con.isValid(0)) {
             String s = u.getNome() + "_" + u.getCognome() + "_" + u.getUsername();
             con = DriverManager.getConnection("jdbc:h2:./resources/db/" + s, pro);
         }
     }
-    /*
-    public static void inserire(User u, String comando) throws SQLException {
-        connect(u);
+
+    public void inserire(User u, String comando) throws SQLException {
         reconnect(u);
         String s = u.getNome() + "_" + u.getCognome() + "_" + u.getUsername();
-        try (PreparedStatement ps = con.prepareStatement("INSERT INTO " + s + " VALUES (?,?,?)")) {
+        try (PreparedStatement ps = con.prepareStatement("INSERT INTO " + s + " VALUES (?)")) {
             ps.setString(1, comando);
             ps.executeUpdate();
             ps.close();
         }
     }
 
-    public static void leggi(User u) throws SQLException {
-        connect(u);
+    public List<String> leggi(User u) throws SQLException {
         reconnect(u);
+        return null;
     }
 
-    public static void cancella(User u) throws SQLException {
-        connect(u);
+    public void cancella(User u) throws SQLException {
         reconnect(u);
         String s = u.getNome() + "_" + u.getCognome() + "_" + u.getUsername();
         try (PreparedStatement ps = con.prepareStatement("DROP TABLE " + s)) {
             ps.execute();
             ps.close();
         }
-    }*/
+    }
+
 }

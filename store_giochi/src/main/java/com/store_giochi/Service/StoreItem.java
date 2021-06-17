@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response;
 public class StoreItem {
 
     public final String percorso = aggiunta(getPercorso(), "cloud");
-
     public final String percorso_replace = getPercorso() + getCarattere() + "cloud" + getCarattere();
 
     @GET
@@ -39,10 +38,8 @@ public class StoreItem {
         while (lit.hasNext()) {
             Cartella.crea_cartella(aggiunta(progetto, lit.next()));
         }
-
         boolean flag = true;
         String js = gson.toJson(flag);
-        System.out.println("hello " + js);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
 
@@ -134,4 +131,24 @@ public class StoreItem {
         String js = gson.toJson(list);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
+    
+    @GET
+    @Path("/numero_giochi/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response numero_giochi() throws IOException {
+        List<String> s = new ArrayList<>();
+        List<String> list = new ArrayList<>();
+        Cartella.lista_file(percorso, s);
+        ListIterator l = s.listIterator();
+        while (l.hasNext()) {
+            String t = (String) l.next();
+            list.add(t.substring(percorso_replace.length()));
+        }
+        Collections.sort(list);
+        Gson gson = new Gson();
+        String js = gson.toJson(list);
+        return Response.ok(js, MediaType.APPLICATION_JSON).build();
+    }
+    
 }

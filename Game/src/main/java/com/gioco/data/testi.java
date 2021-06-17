@@ -11,12 +11,10 @@ public enum Testi {
     ritorno_utente("Bentornato a Game Adventure!!!!\n"),
     benvenuto("Benvenuto a Game Adventure.\n"),
     creazione_utente("Creazione dell'utente in corso nel server.\n"),
-    creazione_utente_errore("Errore della creazione in server dell'utente\n"),
     utente_creato("Utente è stato creato e pronto all'uso.\n"),
     premere_tasto("Premere una lettera per continuare"),
     gioco_winner("Complimenti hai vinto il gioco!!!!\n"),
-    gioco_loser("Hai perso!! riprova sei hai il coraggio.\n"),
-    testo_uscita("Questo gioco è offerto da DoppiaT Entertaiment.\n");
+    testo_uscita("Questo gioco è offerto da DoppiaT Entertaiment!\n");
     
     private final String testo;   // in kilograms
 

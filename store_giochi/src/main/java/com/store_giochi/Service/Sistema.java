@@ -11,7 +11,7 @@ package com.store_giochi.service;
  */
 public class Sistema {
     
-    static String percorso;
+    private static String percorso;
     
     private static String carattere;
     

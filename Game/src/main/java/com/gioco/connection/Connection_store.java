@@ -14,11 +14,8 @@ import javax.ws.rs.core.Response;
 public class Connection_store {
 
     private static Client client;
-    
     private static WebTarget web;
-    
     private static Response resp;
-    
     private static Gson gson;
     
     public static void Connection_store() {
@@ -51,9 +48,12 @@ public class Connection_store {
         return Boolean.parseBoolean(resp.readEntity(String.class));
     }
     
-    public static String percorso(){
+    
+    public static List<String> numero_giochi() {
         Connection_store();
-        resp = web.path("store/get_percorso(").request(MediaType.APPLICATION_JSON).get();
-        return resp.readEntity(String.class);
+        resp = web.path("store/numero_giochi")
+                .request(MediaType.APPLICATION_JSON).get();
+        return gson.fromJson(resp.readEntity(String.class), ArrayList.class);
     }
+    
 }

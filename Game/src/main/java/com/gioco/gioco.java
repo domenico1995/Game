@@ -1,6 +1,6 @@
 package com.gioco;
 
-import com.service.Service;
+import com.gioco.service.Service;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,11 +10,8 @@ import java.util.logging.Logger;
 public class Gioco extends javax.swing.JFrame {
 
     private Service ser;
-
     private String testo;
-
     private Engine en;
-
     private String testo_display;
 
     public Gioco() {
@@ -26,7 +23,11 @@ public class Gioco extends javax.swing.JFrame {
         ser = new Service();
         jScrollPane1.setBorder(null);
         textArea1.setEditable(false);
-        en = new Engine();
+        try {
+            en = new Engine();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Gioco.class.getName()).log(Level.SEVERE, null, ex);
+        }
         textArea1.append(en.getTesto_display());
         //time.schedule(new UpdateTime(), 0, 1000);
     }

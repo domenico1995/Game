@@ -15,13 +15,13 @@ import java.io.OutputStreamWriter;
 
 public class Comandi {
 
-    private String risp = "";
-    private InputStream inStream, inErrStream;
-    private OutputStream outStream;
-    private Process pro;
-    private Thread streamReader;
+    private static String risp = "";
+    private static InputStream inStream, inErrStream;
+    private static OutputStream outStream;
+    private static Process pro;
+    private static Thread streamReader;
 
-    public void esegui(String command) {
+    public static void esegui(String command) {
         if (outStream != null) {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
             try {
@@ -67,13 +67,13 @@ public class Comandi {
         }
     }
 
-    public void setRisp(String line){
+    public static void setRisp(String line){
         if (line != null){
         risp += line + "\n";
         }
     }
     
-    public String getRisp(){
+    public static String getRisp(){
         return risp;
     }
 

@@ -10,10 +10,9 @@ package com.gioco.data;
  * @author user
  */
 public class User {
+    
     private String nome;
-
     private String cognome;
-
     private String username;
 
     public User(){}

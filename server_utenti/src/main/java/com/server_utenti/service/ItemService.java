@@ -2,9 +2,12 @@ package com.server_utenti.service;
 
 import com.google.gson.Gson;
 import com.server_utenti.data.User;
+import com.server_utenti.database.DBStoreUser;
+import static com.server_utenti.database.DBStoreUser.*;
 import com.server_utenti.database.DBUsersSingleton;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,7 +20,7 @@ import javax.ws.rs.core.Response;
 
 @Path("user")
 public class ItemService {
-   
+
     @PUT
     @Path("/add")
     @Consumes("application/json")
@@ -27,17 +30,13 @@ public class ItemService {
         User u = gson.fromJson(json, User.class);
         try {
             DBUsersSingleton.getInstance().insertUsers(u);
+            DBStoreUser.getInstance(u);
         } catch (SQLException ex) {
-            System.out.println("Inserimento: fallito");
             return Response.serverError().build();
         }
-        System.out.println("Inserimento: " + u.getNome() + " " + u.getCognome() + " " + u.getUsername());
         return Response.ok().build();
     }
 
-    /*
-    restituisce user da username
-    */
     @GET
     @Path("/get/")
     @Produces("application/json")
@@ -51,16 +50,12 @@ public class ItemService {
         if (u != null) {
             Gson gson = new Gson();
             String js = gson.toJson(u);
-            System.out.println("Ricerca: " + username);
             return Response.ok(js, MediaType.APPLICATION_JSON).build();
         } else {
-            System.out.println("Ricerca: falita");
             return Response.serverError().build();
         }
     }
-    /*
-    cancella user
-    */
+
     @DELETE
     @Path("/delete/")
     @Produces("application/json")
@@ -70,13 +65,9 @@ public class ItemService {
         } catch (SQLException ex) {
             return Response.serverError().build();
         }
-        System.out.println("Cancelazione: " + username);
         return Response.ok().build();
     }
 
-    /*
-    da vero se è presente user
-    */
     @GET
     @Path("/find_name_surname/")
     @Produces("application/json")
@@ -94,12 +85,9 @@ public class ItemService {
 
         Gson gson = new Gson();
         String js = gson.toJson(flag);
-        System.out.println("Controllo utente: " + nome + " " + cognome);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
-    /*
-    da vero se è presente user
-    */
+
     @GET
     @Path("/find_user/")
     @Produces("application/json")
@@ -116,19 +104,73 @@ public class ItemService {
         }
         Gson gson = new Gson();
         String js = gson.toJson(flag);
-        System.out.println("Controllo utente: " + nome + " " + cognome + " " + username);
         return Response.ok(js, MediaType.APPLICATION_JSON).build();
     }
-    
+
     @GET
     @Path("/controll")
     @Produces("application/json")
     public Response controll() {
-        
         String s = "hello world";
-        System.out.println("Controllo: applicazione in esecuzione");
         return Response.ok(s, MediaType.APPLICATION_JSON).build();
-        
+
     }
-    
+
+    /*
+    @GET
+    @Path("/add_comando/")
+    public Response add_comando(@QueryParam("nome") String nome, @QueryParam("cognome") String cognome,
+            @QueryParam("username") String username, @QueryParam("comando") String comando) {
+        Gson gson = new Gson();
+        User u = new User();
+        u.setNome(nome);
+        u.setCognome(cognome);
+        u.setUsername(username);
+        try {
+            DBStoreUser.getInstance(u).inserire(u, comando);
+        } catch (SQLException ex) {
+            return Response.serverError().build();
+        }
+        boolean flag = true;
+        String js = gson.toJson(flag);
+        return Response.ok(js, MediaType.APPLICATION_JSON).build();
+    }
+
+    @PUT
+    @Path("/cancella_comando")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response cancellazione(@QueryParam("nome") String nome, @QueryParam("cognome") String cognome,
+            @QueryParam("username") String username, @QueryParam("comando") String comando) {
+        Gson gson = new Gson();
+        User u = new User();
+        u.setNome(nome);
+        u.setCognome(cognome);
+        u.setUsername(username);
+        try {
+            DBStoreUser.getInstance(u).cancella(u);
+        } catch (SQLException ex) {
+            return Response.serverError().build();
+        }
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/leggi_comando/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response lista_comando(@QueryParam("nome") String nome, @QueryParam("cognome") String cognome,
+            @QueryParam("username") String username) throws SQLException {
+        Gson gson = new Gson();
+        User u = new User();
+        u.setNome(nome);
+        u.setCognome(cognome);
+        u.setUsername(username);
+        List<String> list = new ArrayList<>();
+        list = DBStoreUser.getInstance(u).leggi(u);
+        System.out.println("ff  ffff " + list);
+        String js = gson.toJson(list);
+        return Response.ok(js, MediaType.APPLICATION_JSON).build();
+    }
+*/
 }
